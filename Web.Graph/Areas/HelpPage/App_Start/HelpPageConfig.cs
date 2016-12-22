@@ -63,26 +63,69 @@ namespace Web.Graph.Areas.HelpPage
 
             //// Uncomment the following to use "1234" directly as the request sample for media type "text/plain" on the controller named "Values"
             //// and action named "Put".
-            var input = 
- @"query { 
-      empresa(ruc:""20100070970"") {
-          ruc
-          nombre
-          tipo_contribuyente
-          departamento
-          buen_contribuyente
-      }
-}";
-            config.SetSampleRequest(input, new MediaTypeHeaderValue("text/json"), "Ruc", "GET", "q");
-            config.SetSampleRequest(input, new MediaTypeHeaderValue("text/json"), "Ruc", "POST", "q");
-
-            var resp = 
-@"{
-    data{
-        empresa{
-            ruc : ""10204569874""
-        }
+            var input =
+ @"query {
+	empresa(ruc:""XXXXXXXXXXX"") {
+        ruc
+        nombre
+        tipo_contribuyente
+        profesion
+        nombre_comercial
+        condicion_contribuyente
+        estado_contribuyente
+        fecha_inscripcion
+        fecha_inicio
+        departamento
+        provincia
+        distrito
+        direccion
+        telefono
+        fax
+        comercio_exterior
+        principal
+        secundario1
+        secundario2
+        rus
+        buen_contribuyente
+        retencion
+        percepcion_vinterna
+        percepcion_cliquido
     }
+    }";
+            config.SetSampleRequest(input, new MediaTypeHeaderValue("text/json"), "Ruc", "GET", "q");
+            config.SetSampleRequest(input, new MediaTypeHeaderValue("application/json"), "Ruc", "POST");
+            config.SetSampleRequest(input, new MediaTypeHeaderValue("text/json"), "Ruc", "POST");
+
+            var resp =
+@"{
+  ""data"": {
+    ""empresa"": {
+      ""ruc"": ""XXXXXXXXXXX"",
+      ""nombre"": ""EMPRESA SOCIEDAD ANONIMA 'O ' S.P.S.A."",
+      ""tipo_contribuyente"": ""SOCIEDAD ANONIMA"",
+      ""profesion"": ""-"",
+      ""nombre_comercial"": ""-"",
+      ""condicion_contribuyente"": ""HABIDO"",
+      ""estado_contribuyente"": ""ACTIVO"",
+      ""fecha_inscripcion"": ""09/10/1992"",
+      ""fecha_inicio"": ""01/06/1979"",
+      ""departamento"": ""LIMA"",
+      ""provincia"": ""LIMA"",
+      ""distrito"": ""JESUS MARIA"",
+      ""direccion"": ""CAL. MORELLI NRO. 181 INT. P-2 "",
+      ""telefono"": ""-"",
+      ""fax"": ""-"",
+      ""comercio_exterior"": ""SIN ACTIVIDAD"",
+      ""principal"": ""VTA. MIN. EN ALMACENES NO ESPECIALIZ."",
+      ""secundario1"": ""VENTA PARTES, PIEZAS, ACCESORIOS."",
+      ""secundario2"": ""VENTA, MANTEN. Y REPARAC. MOTOCICLETAS."",
+      ""rus"": ""NO"",
+      ""buen_contribuyente"": ""-"",
+      ""retencion"": ""SI, incorporado al Régimen de Agentes de Retención de IGV (R.S.037-2002) a partir del 01/06/2002"",
+      ""percepcion_vinterna"": ""-"",
+      ""percepcion_cliquido"": ""-""
+    }
+  }
 }";
             config.SetSampleResponse(resp, new MediaTypeHeaderValue("text/json"), "Ruc", "GET");
             config.SetSampleResponse(resp, new MediaTypeHeaderValue("application/json"), "Ruc", "GET");

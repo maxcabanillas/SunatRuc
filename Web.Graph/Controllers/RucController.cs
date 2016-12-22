@@ -36,7 +36,7 @@ namespace Web.Graph.Controllers
         /// <param name="q">consulta GraphQL</param>
         /// <returns>resultado de la Consulta</returns>
         // POST api/values
-        public object Post(string q)
+        public object Post([FromBody]string q)
         {
             return Run(q).Result;
         }
@@ -81,7 +81,7 @@ namespace Web.Graph.Controllers
                   byte i = 0;
                   foreach (var prop in type.GetProperties())
                   {
-                      prop.SetValue(empresa, comp[i++]);
+                      prop.SetValue(empresa, comp[i++].TrimEnd());
                   }
                   return empresa;
               }

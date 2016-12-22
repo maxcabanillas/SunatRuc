@@ -12,7 +12,7 @@
     <section class="featured">
         <div class="content-wrapper">
             <p>
-                @Html.ActionLink("Help Page Home", "Index")
+                <button onclick="location.href = '@Url.Action("Index")'" class="btn btn-default">Help Page Home</button>
             </p>
         </div>
     </section>
@@ -20,3 +20,14 @@
         @Html.DisplayForModel()
     </section>
 </div>
+}
+@section styles
+{
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.css" rel="stylesheet"/>
+}
+
+@section scripts
+{
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/run_prettify.min.js"></script>
+}
