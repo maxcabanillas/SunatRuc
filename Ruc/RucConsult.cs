@@ -19,23 +19,27 @@ namespace Ruc
 
         #region Methods
 
-        public void GetInfo(string ruc)
+        public Dictionary<string, string> GetInfo(string ruc)
         {
+            if(ruc.Length != 11)
+                throw new ArgumentException("El ruc debe contener 11 digitos", nameof(ruc));
+            Optimize = true;
             var catpcha = GetCaptcha(UrlImage);
             var url = UrlConsult + $"?accion=consPorRuc&nroRuc={ruc}&codigo={catpcha}&tipdoc=";
             var http = CreateRequest(url);
             var r = (HttpWebResponse)http.GetResponse();
-            if (r.StatusCode == HttpStatusCode.OK)
+            if (r.StatusCode != HttpStatusCode.OK)
+                throw new ArgumentException("El servidor no respondio correctamente : " + r.StatusCode);
+            
+            var st = r.GetResponseStream();
+            if(st == null) throw new ArgumentException("No valid Request");
+            var coding = r.CharacterSet == null ? System.Text.Encoding.UTF8 : System.Text.Encoding.GetEncoding(r.CharacterSet);
+            using (var rd = new StreamReader(st, coding))
             {
-                var st = r.GetResponseStream();
-                if(st == null) throw new ArgumentException("No valid Request");
-                var coding = r.CharacterSet == null ? System.Text.Encoding.UTF8 : System.Text.Encoding.GetEncoding(r.CharacterSet);
-                using (var rd = new StreamReader(st, coding))
-                {
-                    var e = rd.ReadToEnd();
-                    GetDetails(HtmlEntity.DeEntitize(e));
-                }
+                var e = rd.ReadToEnd();
+                return GetDetails(HtmlEntity.DeEntitize(e));
             }
+
         }
 
         /*public void Query2(string ruc)
@@ -77,12 +81,13 @@ namespace Ruc
         #region Private Methods
         private Dictionary<string, string> GetDetails(string html)
         {
-            
             var page = new HtmlDocument();
             page.LoadHtml(html);
             var table = page.DocumentNode.SelectSingleNode("/html/body/table[1]");
+            if(table == null)
+                throw new Exception("Catpcha Invalido");
             var dic = new Dictionary<string, string>();
-            string temp = string.Empty;
+            var temp = string.Empty;
             foreach (var item in table.ChildNodes)
             {
                 if (item.NodeType != HtmlNodeType.Element && item.Name != "tr") continue;
@@ -100,12 +105,37 @@ namespace Ruc
                     else
                     {
                         ClearComment(item2);
-                        dic.Add(temp, item2.InnerText.Trim());
+                        dic.Add(temp.Trim(), item2.InnerText.Trim());
                         i = 0;
                     }
                 }
                 
             }
+            /*using (var file = File.CreateText(@"C:\Users\Administrador\Downloads\res.txt"))
+            {
+                foreach (var d in dic)
+                {
+                    var content = string.Empty;
+                    if(d.Value.Contains("\n"))
+                        using (var reader = new StringReader(d.Value))
+                        {
+                            string line;
+                            string concat = null;
+                            while ((line = reader.ReadLine()) != null)
+                            {
+                                line = line.Trim();
+                                if(line == "") continue;
+                                content += line.Trim() + concat;
+                                concat = ",";
+                            }
+                        }
+                    else
+                    {
+                        content = d.Value;
+                    }
+                    file.WriteLine($"{d.Key} {content}");
+                }
+            }*/
             return dic;
             //var rzs = table.SelectSingleNode("tr[1]/td[2]").InnerText.Split('-');
             //dic.Add("ruc", rzs[0].Trim());

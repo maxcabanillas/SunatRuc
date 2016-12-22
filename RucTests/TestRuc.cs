@@ -11,8 +11,11 @@ namespace RucTests
         [Test]
         public void TestOneRuc()
         {
+            var ruc = "20100070970";
             var q = new RucConsult();
-            q.GetInfo("10000307888");
+            var res = q.GetInfo(ruc);
+            Assert.IsTrue(res.Count == 18);
+            StringAssert.AreEqualIgnoringCase(res["Número de RUC:"].Split('-')[0].Trim(), ruc);
         }
 
         /// <summary>
@@ -21,8 +24,10 @@ namespace RucTests
         [Test]
         public void TestMultipleRuc1()
         {
+            var ruc = "10480048356";
             var q = new RucMultipleConsult();
-            q.GetInfo(new []{"10480048356", "10000307888" });
+            var res = q.GetInfo(ruc).ToArray();
+            StringAssert.AreEqualIgnoringCase(res[0][0], ruc, "No coinciden los rucs");
         }
 
         [Test]
@@ -30,7 +35,7 @@ namespace RucTests
         {
             var rucs = Enumerable.Range(0, 20).Select(r => "10000307888");
             var q = new RucMultipleConsult();
-            q.GetInfo(rucs);
+            q.GetInfo(rucs.ToArray());
         }
     }
 }

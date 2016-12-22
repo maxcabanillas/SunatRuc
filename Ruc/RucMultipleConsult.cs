@@ -21,30 +21,23 @@ namespace Ruc
 
         #region Export
 
-        public void GetInfo(IEnumerable<string> rucs)
+        public IEnumerable<string[]> GetInfo(params string[] rucs)
         {
-            var values = rucs.ToArray();
-            if (values.Length > 10)
+            if (rucs.Length == 0)
+                throw new ArgumentException("Se requiere almenos un Ruc", nameof(rucs));
+            var catpcha = GetCaptcha(UrlImage);
+            if (rucs.Length > 10)
             {
-                GetOpcion2(values);
+                GetOpcion2(rucs);
             }
-            else
-            {
-                GetOpcion1(values);
-            }
+            var url = UrlConsult + "?accion=consManual&" + string.Join("&", rucs.Select(ruc => "selRuc=" + ruc)) + "&codigoM=" + catpcha;
+            var http = CreateRequest(url);
+            return GetProcessResponse((HttpWebResponse)http.GetResponse());
         }
 
         #endregion
 
         #region Private Methods
-
-        private string GetOpcion1(IEnumerable<string> rucs)
-        {
-            var catpcha = GetCaptcha(UrlImage);
-            var url = UrlConsult + "?accion=consManual&" + string.Join("&", rucs.Select(ruc => "selRuc=" + ruc)) + "&codigoM=" + catpcha;
-            var http = CreateRequest(url);
-            return GetProcessResponse((HttpWebResponse)http.GetResponse());
-        }
 
         private void GetOpcion2(IEnumerable<string> rucs)
         {
@@ -63,7 +56,7 @@ namespace Ruc
             GetProcessResponse((HttpWebResponse)http.GetResponse());
         }
 
-        private string GetProcessResponse(HttpWebResponse response)
+        private IEnumerable<string[]> GetProcessResponse(HttpWebResponse response)
         {
             if (response.StatusCode != HttpStatusCode.OK)
                 throw new ArgumentException("No se obtuvo una respuesta correcta: " + response.StatusCode);
@@ -78,11 +71,12 @@ namespace Ruc
                     var doc = new HtmlDocument();
                     doc.LoadHtml(html);
                     var nods = doc.DocumentNode.SelectNodes("//a[@target='_blank']");
+                    if(nods == null) 
+                        throw new Exception("Catpcha Incorrecto");
                     var link = nods[0].Attributes["href"].Value;
-                    DownloadZipAndProcess(link);
+                    return DownloadZipAndProcess(link);
                 } 
             }
-            return "";
         }
         private static byte[] ToBytes(Stream input)
         {
@@ -93,7 +87,7 @@ namespace Ruc
             }
         }
 
-        private void DownloadZipAndProcess(string link)
+        private IEnumerable<string[]> DownloadZipAndProcess(string link)
         {
             var req = (HttpWebRequest)WebRequest.Create(link);
 
@@ -101,20 +95,18 @@ namespace Ruc
             {
                 using (var streamTxt = ZipHelper.ExtractOnlyFile(ToBytes(response)))
                 {
+                    var contents = new Queue<string[]>();
                     using (var r = new StreamReader(streamTxt, Encoding.GetEncoding("ISO-8859-1")))
                     {
-                        var line = r.ReadLine();
-                        //var cols = line.Split('|');
-                        //foreach (var item in cols)
-                        //{
-                        //    datagrid.Columns.Add(item, item);
-                        //}
-
-                        //while ((line = r.ReadLine()) != null)
-                        //{
-                        //    datagrid.Rows.Add(line.Split('|'));
-                        //}
+                        //Remove Header
+                        r.ReadLine();
+                        string line;
+                        while ((line = r.ReadLine()) != null)
+                        {
+                            contents.Enqueue(line.Split('|'));
+                        }
                     }
+                    return contents;
                 }
              
             }
@@ -130,7 +122,7 @@ namespace Ruc
                 ImageToBlackAndWhite(imagen);
             using (var api = OcrApi.Create())
             {
-                api.Init(string.Empty, "eng", OcrEngineMode.OEM_TESSERACT_ONLY);
+                api.Init(@"C:\Users\Administrador\Documents\History\SunatRuc\Web.Graph\bin", "eng", OcrEngineMode.OEM_TESSERACT_ONLY);
                 api.SetVariable("tessedit_char_whitelist", "ABCDEFGHIJKLMNPQRSTUVWXYZ");
                 var text = api.GetTextFromImage(imagen);
                 return text.Trim();
