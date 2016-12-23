@@ -27,11 +27,12 @@ namespace Ruc
                 throw new ArgumentException("Se requiere almenos un Ruc", nameof(rucs));
             // Considerar la carga que aumenta.
             Optimize = true;
+            
+            //if (rucs.Length > 10)
+            //{
+            //    return GetOpcion2(rucs);
+            //}
             var catpcha = GetCaptcha(UrlImage);
-            if (rucs.Length > 10)
-            {
-                GetOpcion2(rucs);
-            }
             var url = UrlConsult + "?accion=consManual&" + string.Join("&", rucs.Select(ruc => "selRuc=" + ruc)) + "&codigoM=" + catpcha;
             var http = CreateRequest(url);
             return GetProcessResponse((HttpWebResponse)http.GetResponse());
@@ -41,21 +42,31 @@ namespace Ruc
 
         #region Private Methods
 
-        private void GetOpcion2(IEnumerable<string> rucs)
+        private IEnumerable<string[]> GetOpcion2(IEnumerable<string> rucs)
         {
             var builder = new StringBuilder();
             foreach (var ruc in rucs)
             {
                 builder.AppendLine(ruc + "|");
             }
-            var zip = ZipHelper.Compress(new KeyValuePair<string, byte[]>("ruc.txt", Encoding.ASCII.GetBytes(builder.ToString())));
-
             var catpcha = GetCaptcha(UrlImage);
-            var http = CreateRequest(UrlConsult);
-            var boundary = "--IMM";
-            http.ContentType = "multipart/form-data; boundary=" + boundary;
+            var zip = ZipHelper.Compress(new KeyValuePair<string, byte[]>("ruc.txt", Encoding.ASCII.GetBytes(builder.ToString())));
+            var postParameters = new Dictionary<string, object>
+            {
+                {"accion", "consArchivo"},
+                {
+                    "archivo", new FileParameter
+                    {
+                        File = zip,
+                        FileName = "rucs.zip"
+                    }
+                },
+                {"codigoA", catpcha}
+            };
 
-            GetProcessResponse((HttpWebResponse)http.GetResponse());
+            HttpWebResponse webResponse = MultipartFormDataPost(UrlConsult, postParameters);
+
+            return GetProcessResponse(webResponse);
         }
 
         private IEnumerable<string[]> GetProcessResponse(HttpWebResponse response)
@@ -125,15 +136,19 @@ namespace Ruc
             using (var api = OcrApi.Create())
             {
                 //Remote Server
-                //api.Init(@"h:\root\home\giancarlos-001\www\pymestudio\bin", "eng", OcrEngineMode.OEM_TESSERACT_ONLY);
+#if RELEASE
+                api.Init(@"h:\root\home\giancarlos-001\www\pymestudio\bin", "eng", OcrEngineMode.OEM_TESSERACT_ONLY);
+#else
                 api.Init(@"C:\Users\Administrador\Documents\History\SunatRuc\Web.Graph\bin", "eng", OcrEngineMode.OEM_TESSERACT_ONLY);
                 //api.Init(@"C:\Users\Giansalex\Source\Repos\github\SunatRuc\Ruc", "eng", OcrEngineMode.OEM_TESSERACT_ONLY);
+#endif
                 api.SetVariable("tessedit_char_whitelist", "ABCDEFGHIJKLMNPQRSTUVWXYZ");
                 var text = api.GetTextFromImage(imagen);
                 return text.Trim();
             }
         }
 
-        #endregion
+#endregion
+
     }
 }

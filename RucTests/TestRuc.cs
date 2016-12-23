@@ -33,7 +33,7 @@ namespace RucTests
         [Test]
         public void TestMultipleRuc2()
         {
-            var rucs = Enumerable.Range(0, 20).Select(r => "10000307888");
+            var rucs = Enumerable.Range(0, 11).Select(r => "10000307888");
             var q = new RucMultipleConsult();
             q.GetInfo(rucs.ToArray());
         }
