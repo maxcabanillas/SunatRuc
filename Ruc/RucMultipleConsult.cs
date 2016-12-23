@@ -25,6 +25,8 @@ namespace Ruc
         {
             if (rucs.Length == 0)
                 throw new ArgumentException("Se requiere almenos un Ruc", nameof(rucs));
+            // Considerar la carga que aumenta.
+            Optimize = true;
             var catpcha = GetCaptcha(UrlImage);
             if (rucs.Length > 10)
             {
@@ -122,7 +124,8 @@ namespace Ruc
                 ImageToBlackAndWhite(imagen);
             using (var api = OcrApi.Create())
             {
-                api.Init(@"C:\Users\Administrador\Documents\History\SunatRuc\Web.Graph\bin", "eng", OcrEngineMode.OEM_TESSERACT_ONLY);
+                //api.Init(@"C:\Users\Administrador\Documents\History\SunatRuc\Web.Graph\bin", "eng", OcrEngineMode.OEM_TESSERACT_ONLY);
+                api.Init(@"C:\Users\Giansalex\Source\Repos\github\SunatRuc\Ruc", "eng", OcrEngineMode.OEM_TESSERACT_ONLY);
                 api.SetVariable("tessedit_char_whitelist", "ABCDEFGHIJKLMNPQRSTUVWXYZ");
                 var text = api.GetTextFromImage(imagen);
                 return text.Trim();

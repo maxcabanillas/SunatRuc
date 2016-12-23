@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Text;
 using NUnit.Framework;
@@ -21,10 +23,14 @@ namespace RucTests
             Assert.IsTrue(contentBytes.Length != 0);
             var contentZip = ZipHelper.Compress(new KeyValuePair<string, byte[]>(Path.GetFileName("rucs.txt"), contentBytes));
             Assert.IsTrue(contentZip.Length != 0, "Zip sin contenido");
-            using (var zip = File.Create(@"C:\Users\Administrador\Downloads\File.Zip"))
+            var desktopFolder = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
+            var zipPath = Path.Combine(desktopFolder, "File.Zip");
+            using (var zip = File.Create(zipPath))
             {
                 zip.Write(contentZip, 0, contentZip.Length);
             }
+            Assert.IsTrue(File.Exists(zipPath));
+            Process.Start(zipPath);
         }
 
         [Test]

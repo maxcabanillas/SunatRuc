@@ -13,6 +13,12 @@ namespace Web.Graph.Controllers
     /// </summary>
     public class RucController : ApiController
     {
+        private static Schema _schema;
+
+        static RucController()
+        {
+            _schema = new Schema { Query = new RucsQuery() };
+        }
         //// GET api/values
         //public IEnumerable<string> Get()
         //{
@@ -23,32 +29,32 @@ namespace Web.Graph.Controllers
         /// <summary>
         /// Retorna la informacion del Ruc.
         /// </summary>
-        /// <param name="q">consulta GraphQL</param>
+        /// <param name="query">consulta GraphQL</param>
         /// <returns>resultado de la Consulta</returns>
-        public object Get(string q)
+        public object Get(string query)
         {
-            return Run(q).Result;
+            return Run(query).Result;
         }
 
         /// <summary>
         /// Retorna la informacion del Ruc.
         /// </summary>
-        /// <param name="q">consulta GraphQL</param>
+        /// <param name="query">consulta GraphQL</param>
         /// <returns>resultado de la Consulta</returns>
         // POST api/values
-        public object Post([FromBody]string q)
+        public object Post([FromBody]string query)
         {
-            return Run(q).Result;
+            return Run(query).Result;
         }
 
         private async Task<ExecutionResult> Run(string query)
         {
 
-            var schema = new Schema { Query = new RucsQuery() };
+            //var schema = new Schema { Query = new RucsQuery() };
 
             var result = await new DocumentExecuter().ExecuteAsync(_ =>
             {
-                _.Schema = schema;
+                _.Schema = _schema;
                 _.Query = query;
             }).ConfigureAwait(false);
             return result;

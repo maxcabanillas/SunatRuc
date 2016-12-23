@@ -25,6 +25,10 @@ namespace Web.Graph.Areas.HelpPage
     /// </summary>
     public static class HelpPageConfig
     {
+        /// <summary>
+        /// Register Help customize
+        /// </summary>
+        /// <param name="config"></param>
         [SuppressMessage("Microsoft.Globalization", "CA1303:Do not pass literals as localized parameters",
             MessageId = "Web.Graph.Areas.HelpPage.TextSample.#ctor(System.String)",
             Justification = "End users may choose to merge this string with existing localized resources.")]
@@ -91,8 +95,8 @@ namespace Web.Graph.Areas.HelpPage
         percepcion_vinterna
         percepcion_cliquido
     }
-    }";
-            config.SetSampleRequest(input, new MediaTypeHeaderValue("text/json"), "Ruc", "GET", "q");
+}";
+            config.SetSampleRequest(input, new MediaTypeHeaderValue("text/json"), "Ruc", "GET", "query");
             config.SetSampleRequest(input, new MediaTypeHeaderValue("application/json"), "Ruc", "POST");
             config.SetSampleRequest(input, new MediaTypeHeaderValue("text/json"), "Ruc", "POST");
 
@@ -112,16 +116,16 @@ namespace Web.Graph.Areas.HelpPage
       ""departamento"": ""LIMA"",
       ""provincia"": ""LIMA"",
       ""distrito"": ""JESUS MARIA"",
-      ""direccion"": ""CAL. MORELLI NRO. 181 INT. P-2 "",
+      ""direccion"": ""CAL. MORELLI ..."",
       ""telefono"": ""-"",
       ""fax"": ""-"",
       ""comercio_exterior"": ""SIN ACTIVIDAD"",
-      ""principal"": ""VTA. MIN. EN ALMACENES NO ESPECIALIZ."",
-      ""secundario1"": ""VENTA PARTES, PIEZAS, ACCESORIOS."",
-      ""secundario2"": ""VENTA, MANTEN. Y REPARAC. MOTOCICLETAS."",
+      ""principal"": ""VTA. MIN. ..."",
+      ""secundario1"": ""VENTA ..."",
+      ""secundario2"": ""VENTA ..."",
       ""rus"": ""NO"",
       ""buen_contribuyente"": ""-"",
-      ""retencion"": ""SI, incorporado al Régimen de Agentes de Retención de IGV (R.S.037-2002) a partir del 01/06/2002"",
+      ""retencion"": ""SI, incorporado ..."",
       ""percepcion_vinterna"": ""-"",
       ""percepcion_cliquido"": ""-""
     }

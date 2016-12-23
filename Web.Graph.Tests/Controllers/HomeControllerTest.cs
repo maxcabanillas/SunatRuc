@@ -19,7 +19,7 @@ namespace Web.Graph.Tests.Controllers
 
             // Declarar
             Assert.IsNotNull(result);
-            Assert.AreEqual("Home Page", result.ViewBag.Title);
+            Assert.AreEqual("Pagina Principal", result.ViewBag.Title);
         }
     }
 }

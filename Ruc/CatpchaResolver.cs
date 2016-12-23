@@ -13,7 +13,7 @@ namespace Ruc
         private readonly CookieContainer _cookies;
         #endregion
 
-        #region Fields
+        #region Properties
         /// <summary>
         /// Optimiza la imagen para que pueda ser facilmente reconocida.
         /// </summary>
