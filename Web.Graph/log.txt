@@ -1,0 +1,16 @@
+********** 23/12/2016 02:49:41 p.m. **********
+Exception Type: System.IO.DirectoryNotFoundException
+Exception: No se puede encontrar una parte de la ruta de acceso 'h:\root\home\giancarlos-001\www\pymestudio\bin\tessdata'.
+Source: Consultando :10480048356
+Stack Trace: 
+   en System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   en System.IO.FileSystemEnumerableIterator`1.CommonInit()
+   en System.IO.FileSystemEnumerableIterator`1..ctor(String path, String originalUserPath, String searchPattern, SearchOption searchOption, SearchResultHandler`1 resultHandler, Boolean checkHost)
+   en System.IO.Directory.GetFiles(String path, String searchPattern)
+   en Patagames.Ocr.OcrApi.CheckForSupportedLanguages(String dataPath, String language, OcrEngineMode oem, String[] configs, String[] varsVec, String[] varsValues)
+   en Patagames.Ocr.OcrApi.Init(String dataPath, String language, OcrEngineMode oem, String[] configs, String[] varsVec, String[] varsValues, Boolean setOnlyNonDebugParams, Boolean checkLanguage)
+   en Ruc.RucMultipleConsult.GetCatpcha(Bitmap imagen) en C:\Users\Administrador\Documents\History\SunatRuc\Ruc\RucMultipleConsult.cs:línea 128
+   en Ruc.CatpchaResolver.GetCaptcha(String url) en C:\Users\Administrador\Documents\History\SunatRuc\Ruc\CatpchaResolver.cs:línea 57
+   en Ruc.RucMultipleConsult.GetInfo(String[] rucs) en C:\Users\Administrador\Documents\History\SunatRuc\Ruc\RucMultipleConsult.cs:línea 30
+   en Web.Graph.Controllers.RucsQuery.<>c.<.ctor>b__0_0(ResolveFieldContext`1 context) en C:\Users\Administrador\Documents\History\SunatRuc\Web.Graph\Controllers\RucController.cs:línea 84
+

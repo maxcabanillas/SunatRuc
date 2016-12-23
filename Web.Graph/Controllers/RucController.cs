@@ -1,4 +1,6 @@
-﻿using GraphQL;
+﻿using System;
+using System.IO;
+using GraphQL;
 using GraphQL.Types;
 using Ruc;
 using System.Linq;
@@ -13,12 +15,8 @@ namespace Web.Graph.Controllers
     /// </summary>
     public class RucController : ApiController
     {
-        private static readonly Schema Esquema;
+        private static readonly Schema Esquema = new Schema { Query = new RucsQuery() };
 
-        static RucController()
-        {
-            Esquema = new Schema { Query = new RucsQuery() };
-        }
         //// GET api/values
         //public IEnumerable<string> Get()
         //{
@@ -77,21 +75,80 @@ namespace Web.Graph.Controllers
               resolve: context =>
               {
                   var ruc = context.GetArgument<string>("ruc");
-                  //Validar ruc.
-                  var empresa = new Company();
-                  if (ruc == null || ruc.Length != 11) return empresa;
-                  var cs = new RucMultipleConsult();
-                  var result = cs.GetInfo(ruc);
-                  var type = empresa.GetType();
-                  var comp = result.First();
-                  byte i = 0;
-                  foreach (var prop in type.GetProperties())
+                  try
                   {
-                      prop.SetValue(empresa, comp[i++].TrimEnd());
+                      //Validar ruc.
+                      var empresa = new Company();
+                      if (ruc == null || ruc.Length != 11) return empresa;
+                      var cs = new RucMultipleConsult();
+                      var result = cs.GetInfo(ruc);
+                      var type = empresa.GetType();
+                      var comp = result.First();
+                      byte i = 0;
+                      foreach (var prop in type.GetProperties())
+                      {
+                          prop.SetValue(empresa, comp[i++].TrimEnd());
+                      }
+                      return empresa;
                   }
-                  return empresa;
+                  catch (Exception e)
+                  {
+                      ExceptionUtility.LogException(e, "Consultando :" + ruc);
+                  }
+                  return null;
               }
             );
+        }
+    }
+
+    /// <summary>
+    /// Class for save exceptions.
+    /// </summary>
+    public static class ExceptionUtility
+    {
+        // All methods are static, so this can be private 
+
+        // Log an Exception 
+        /// <summary>
+        /// Añade el detalle de una Excepcion.
+        /// </summary>
+        /// <param name="exc"></param>
+        /// <param name="source"></param>
+        public static void LogException(Exception exc, string source)
+        {
+            // Include enterprise logic for logging exceptions 
+            // Get the absolute path to the log file 
+
+            // Open the log file for append and write the log
+            using (StreamWriter sw = new StreamWriter(System.Web.HttpContext.Current.Server.MapPath("~/log.txt"), true))
+            {
+                sw.WriteLine("********** {0} **********", DateTime.Now);
+                if (exc.InnerException != null)
+                {
+                    sw.Write("Inner Exception Type: ");
+                    sw.WriteLine(exc.InnerException.GetType().ToString());
+                    sw.Write("Inner Exception: ");
+                    sw.WriteLine(exc.InnerException.Message);
+                    sw.Write("Inner Source: ");
+                    sw.WriteLine(exc.InnerException.Source);
+                    if (exc.InnerException.StackTrace != null)
+                    {
+                        sw.WriteLine("Inner Stack Trace: ");
+                        sw.WriteLine(exc.InnerException.StackTrace);
+                    }
+                }
+                sw.Write("Exception Type: ");
+                sw.WriteLine(exc.GetType().ToString());
+                sw.WriteLine("Exception: " + exc.Message);
+                sw.WriteLine("Source: " + source);
+                sw.WriteLine("Stack Trace: ");
+                if (exc.StackTrace != null)
+                {
+                    sw.WriteLine(exc.StackTrace);
+                    sw.WriteLine();
+                }
+                sw.Close();
+            }
         }
     }
 }

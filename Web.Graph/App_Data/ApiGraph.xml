@@ -516,5 +516,17 @@
             new Instance of <see cref="T:Web.Graph.Controllers.RucsQuery"/>
             </summary>
         </member>
+        <member name="T:Web.Graph.Controllers.ExceptionUtility">
+            <summary>
+            Class for save exceptions.
+            </summary>
+        </member>
+        <member name="M:Web.Graph.Controllers.ExceptionUtility.LogException(System.Exception,System.String)">
+            <summary>
+            Añade el detalle de una Excepcion.
+            </summary>
+            <param name="exc"></param>
+            <param name="source"></param>
+        </member>
     </members>
 </doc>
