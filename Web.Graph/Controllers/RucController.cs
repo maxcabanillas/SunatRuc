@@ -13,11 +13,11 @@ namespace Web.Graph.Controllers
     /// </summary>
     public class RucController : ApiController
     {
-        private static Schema _schema;
+        private static readonly Schema Esquema;
 
         static RucController()
         {
-            _schema = new Schema { Query = new RucsQuery() };
+            Esquema = new Schema { Query = new RucsQuery() };
         }
         //// GET api/values
         //public IEnumerable<string> Get()
@@ -54,7 +54,7 @@ namespace Web.Graph.Controllers
 
             var result = await new DocumentExecuter().ExecuteAsync(_ =>
             {
-                _.Schema = _schema;
+                _.Schema = Esquema;
                 _.Query = query;
             }).ConfigureAwait(false);
             return result;
