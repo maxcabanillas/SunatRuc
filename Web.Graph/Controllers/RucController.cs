@@ -32,12 +32,12 @@ namespace Web.Graph.Controllers
             return Run(query).Result;
         }
 
+        // POST api/values
         /// <summary>
         /// Retorna la informacion del Ruc.
         /// </summary>
         /// <param name="query">consulta GraphQL</param>
         /// <returns>resultado de la Consulta</returns>
-        // POST api/values
         public object Post([FromBody]string query)
         {
             return Run(query).Result;

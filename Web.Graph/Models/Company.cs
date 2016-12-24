@@ -38,17 +38,26 @@ namespace Web.Graph.Models
         public string PercepcionCliquido { get; set; }
     }
 
-
+    /// <summary>
+    /// Company Type GraphQL
+    /// </summary>
     public class CompanyType : ObjectGraphType<Company>
     {
+        /// <summary>
+        /// New Instance of <see cref="CompanyType"/>
+        /// </summary>
         public CompanyType()
         {
+            
+            Name = "empresa";
             Field(x => x.Ruc).Description("Numero Ruc");
             Field(x => x.Nombre, true).Description("Nombre / Razón Social");
-            Field(x => x.TipoContribuyente, true).Name("tipo_contribuyente").Description("Tipo de Contribuyente");            
+            Field(x => x.TipoContribuyente, true).Name("tipo_contribuyente").Description("Tipo de Contribuyente");
             Field(x => x.Profesion, true).Description("Profesión u Oficio");
             Field(x => x.NombreComercial, true).Name("nombre_comercial").Description("Nombre Comercial");
-            Field(x => x.CondicionContribuyente, true).Name("condicion_contribuyente").Description("Condición del Contribuyente");
+            Field(x => x.CondicionContribuyente, true)
+                .Name("condicion_contribuyente")
+                .Description("Condición del Contribuyente");
             Field(x => x.EstadoContribuyente, true).Name("estado_contribuyente").Description("Estado Contribuyente");
             Field(x => x.FechaInscripcion, true).Name("fecha_inscripcion").Description("Fecha de Inscripción");
             Field(x => x.FechaInicio, true).Name("fecha_inicio").Description("Fecha de Inicio de Actividades");
@@ -71,6 +80,7 @@ namespace Web.Graph.Models
                 .Description("Agentes de Percepción IGV-Combustible Líquido");
         }
     }
+
     /// <summary>
     /// Query Ruc
     /// </summary>
@@ -82,36 +92,37 @@ namespace Web.Graph.Models
         public RucsQuery()
         {
             Field<CompanyType>(
-              "empresa",
-              arguments: new QueryArguments(new QueryArgument<StringGraphType> { Name = "ruc" }),
-              resolve: context =>
-              {
-                  var ruc = context.GetArgument<string>("ruc");
-                  try
-                  {
-                      //Validar ruc.
-                      var empresa = new Company();
-                      if (ruc == null || ruc.Length != 11) return empresa;
-                      var cs = new RucMultipleConsult();
-                      var result = cs.GetInfo(ruc);
-                      var type = empresa.GetType();
-                      var comp = result.First();
-                      byte i = 0;
-                      foreach (var prop in type.GetProperties())
-                      {
-                          prop.SetValue(empresa, comp[i++].TrimEnd());
-                      }
-                      return empresa;
-                  }
-                  catch (Exception e)
-                  {
-                      ExceptionUtility.LogException(e, "Consultando :" + ruc);
-                  }
-                  return null;
-              }
+                "empresa",
+                arguments: new QueryArguments(new QueryArgument<StringGraphType> {Name = "ruc"}),
+                resolve: context =>
+                {
+                    var ruc = context.GetArgument<string>("ruc");
+                    try
+                    {
+                        //Validar ruc.
+                        var empresa = new Company();
+                        if (ruc == null || ruc.Length != 11) return empresa;
+                        var cs = new RucMultipleConsult();
+                        var result = cs.GetInfo(ruc);
+                        var type = empresa.GetType();
+                        var comp = result.First();
+                        byte i = 0;
+                        foreach (var prop in type.GetProperties())
+                        {
+                            prop.SetValue(empresa, comp[i++].TrimEnd());
+                        }
+                        return empresa;
+                    }
+                    catch (Exception e)
+                    {
+                        ExceptionUtility.LogException(e, "Consultando :" + ruc);
+                    }
+                    return null;
+                }
             );
         }
     }
+
     /// <summary>
     /// Class for Query receive multiple ruc, and multiple responses.
     /// </summary>
@@ -123,38 +134,34 @@ namespace Web.Graph.Models
         public ListQuery()
         {
             Field<ListGraphType<CompanyType>>(
-              "empresa",
-              arguments: new QueryArguments(new QueryArgument<ListGraphType<StringGraphType>> { Name = "ruc" }),
-              resolve: context =>
-              {
-                  var rucs = context.GetArgument<List<string>>("ruc");
-                  var response = new List<Company>();
-
-                  foreach (var ruc in rucs)
-                  {
-                      try
-                      {
-                          //Validar ruc.
-                          var empresa = new Company();
-                          if (ruc == null || ruc.Length != 11) return empresa;
-                          var cs = new RucMultipleConsult();
-                          var result = cs.GetInfo(ruc);
-                          var type = empresa.GetType();
-                          var comp = result.First();
-                          byte i = 0;
-                          foreach (var prop in type.GetProperties())
-                          {
-                              prop.SetValue(empresa, comp[i++].TrimEnd());
-                          }
-                          response.Add(empresa);
-                      }
-                      catch (Exception e)
-                      {
-                          ExceptionUtility.LogException(e, "Query GraphQL");
-                      }
-                  }
-                  return response;
-              }
+                "empresa",
+                arguments: new QueryArguments(new QueryArgument<ListGraphType<StringGraphType>> {Name = "ruc"}),
+                resolve: context =>
+                {
+                    var rucs = context.GetArgument<List<string>>("ruc");
+                    var response = new List<Company>();
+                    try
+                    {
+                        var cs = new RucMultipleConsult();
+                        var result = cs.GetInfo(rucs.ToArray());
+                        var props = typeof(Company).GetProperties();
+                        foreach (var res in result)
+                        {
+                            var empresa = new Company();
+                            byte i = 0;
+                            foreach (var prop in props)
+                            {
+                                prop.SetValue(empresa, res[i++].TrimEnd());
+                            }
+                            response.Add(empresa);
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        ExceptionUtility.LogException(e, "Query GraphQL");
+                    }
+                    return response;
+               }
             );
         }
     }
