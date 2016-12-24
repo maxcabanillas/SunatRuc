@@ -13,15 +13,14 @@ namespace Web.Graph.Controllers
     /// </summary>
     public class RucController : ApiController
     {
-        //private static readonly Schema Esquema = new Schema { Query = new RucsQuery() };
+        private static readonly Schema Esquema;
 
-        //// GET api/values
-        //public IEnumerable<string> Get()
-        //{
-        //    return new string[] { "value1", "value2" };
-        //}
+        static RucController()
+        {
+            Esquema = new Schema {Query = new RucsQuery()};
+        }
 
-        // GET api/values/5
+        // GET api/ruc?query=
         /// <summary>
         /// Retorna la informacion del Ruc.
         /// </summary>
@@ -32,7 +31,7 @@ namespace Web.Graph.Controllers
             return Run(query).Result;
         }
 
-        // POST api/values
+        // POST api/ruc
         /// <summary>
         /// Retorna la informacion del Ruc.
         /// </summary>
@@ -46,11 +45,11 @@ namespace Web.Graph.Controllers
         private async Task<ExecutionResult> Run(string query)
         {
 
-            var schema = new Schema { Query = new RucsQuery() };
+            //var schema = new Schema { Query = new RucsQuery() };
 
             var result = await new DocumentExecuter().ExecuteAsync(_ =>
             {
-                _.Schema = schema;
+                _.Schema = Esquema;
                 _.Query = query;
             }).ConfigureAwait(false);
             return result;
@@ -76,7 +75,7 @@ namespace Web.Graph.Controllers
             // Get the absolute path to the log file 
 
             // Open the log file for append and write the log
-            using (StreamWriter sw = new StreamWriter(System.Web.HttpContext.Current.Server.MapPath("~/log.txt"), true))
+            using (var sw = new StreamWriter(System.Web.HttpContext.Current.Server.MapPath("~/App_Data/log.txt"), true))
             {
                 sw.WriteLine("********** {0} **********", DateTime.Now);
                 if (exc.InnerException != null)

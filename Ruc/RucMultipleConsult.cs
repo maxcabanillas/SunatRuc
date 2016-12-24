@@ -131,6 +131,9 @@ namespace Ruc
         #region CatpcharResolver
         public override string GetCatpcha(Bitmap imagen)
         {
+#if !DEBUG
+            //OcrApi.PathToEngine = @"h:\root\home\giancarlos-001\www\pymestudio\bin\x86\tesseract.dll";
+#endif
             if (Optimize)
                 ImageToBlackAndWhite(imagen);
             using (var api = OcrApi.Create())
@@ -140,7 +143,7 @@ namespace Ruc
                 //api.Init(@"C:\Users\Administrador\Documents\History\SunatRuc\Web.Graph\bin", "eng", OcrEngineMode.OEM_TESSERACT_ONLY);
                 api.Init(@"C:\Users\Giansalex\Source\Repos\github\SunatRuc\Ruc", "eng", OcrEngineMode.OEM_TESSERACT_ONLY);
 #else
-                api.Init(@"", "eng", OcrEngineMode.OEM_TESSERACT_ONLY);
+                api.Init(@"h:\root\home\giancarlos-001\www\pymestudio\bin", "eng", OcrEngineMode.OEM_TESSERACT_ONLY);
 #endif
                 api.SetVariable("tessedit_char_whitelist", "ABCDEFGHIJKLMNPQRSTUVWXYZ");
                 var text = api.GetTextFromImage(imagen);

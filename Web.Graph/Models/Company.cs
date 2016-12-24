@@ -93,7 +93,7 @@ namespace Web.Graph.Models
         {
             Field<CompanyType>(
                 "empresa",
-                arguments: new QueryArguments(new QueryArgument<StringGraphType> {Name = "ruc"}),
+                arguments: new QueryArguments(new QueryArgument<StringGraphType> { Name = "ruc" }),
                 resolve: context =>
                 {
                     var ruc = context.GetArgument<string>("ruc");
@@ -117,7 +117,8 @@ namespace Web.Graph.Models
                     {
                         ExceptionUtility.LogException(e, "Consultando :" + ruc);
                     }
-                    return null;
+                    //return null;
+                    return new Company {Ruc = ruc, Nombre = "Giansalex"};
                 }
             );
         }
