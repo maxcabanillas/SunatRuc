@@ -70,6 +70,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Auth\RucLogin.cs" />
     <Compile Include="Helper\ZipHelper.cs" />
     <Compile Include="RucConsult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
