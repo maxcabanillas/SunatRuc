@@ -49,7 +49,6 @@ namespace Web.Graph.Utils
                     sw.WriteLine(exc.StackTrace);
                     sw.WriteLine();
                 }
-                sw.Close();
             }
         }
     }

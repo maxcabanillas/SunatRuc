@@ -74,22 +74,21 @@ namespace Ruc
             if (response.StatusCode != HttpStatusCode.OK)
                 throw new ArgumentException("No se obtuvo una respuesta correcta: " + response.StatusCode);
 
-            using (var stream = response.GetResponseStream())
+            var stream = response.GetResponseStream();
+            if (stream == null)
+                throw new ArgumentException("No se encontro una respuesta válida.");
+            using (var rd = new StreamReader(stream))
             {
-                if (stream == null)
-                    throw new ArgumentException("No se encontro una respuesta válida.");
-                using (var rd = new StreamReader(stream))
-                {
-                    var html = rd.ReadToEnd();
-                    var doc = new HtmlDocument();
-                    doc.LoadHtml(html);
-                    var nods = doc.DocumentNode.SelectNodes("//a[@target='_blank']");
-                    if(nods == null) 
-                        throw new Exception("Catpcha Incorrecto");
-                    var link = nods[0].Attributes["href"].Value;
-                    return DownloadZipAndProcess(link);
-                } 
-            }
+                var html = rd.ReadToEnd();
+                var doc = new HtmlDocument();
+                doc.LoadHtml(html);
+                var nods = doc.DocumentNode.SelectNodes("//a[@target='_blank']");
+                if(nods == null) 
+                    throw new Exception("Catpcha Incorrecto");
+                var link = nods[0].Attributes["href"].Value;
+                return DownloadZipAndProcess(link);
+            } 
+            
         }
         private static byte[] ToBytes(Stream input)
         {
@@ -106,22 +105,20 @@ namespace Ruc
 
             using (var response = req.GetResponse().GetResponseStream())
             {
-                using (var streamTxt = ZipHelper.ExtractOnlyFile(ToBytes(response)))
+                var streamTxt = ZipHelper.ExtractOnlyFile(ToBytes(response));              
+                var contents = new Queue<string[]>();
+                using (var r = new StreamReader(streamTxt, Encoding.GetEncoding("ISO-8859-1")))
                 {
-                    var contents = new Queue<string[]>();
-                    using (var r = new StreamReader(streamTxt, Encoding.GetEncoding("ISO-8859-1")))
+                    //Remove Header
+                    r.ReadLine();
+                    string line;
+                    while ((line = r.ReadLine()) != null)
                     {
-                        //Remove Header
-                        r.ReadLine();
-                        string line;
-                        while ((line = r.ReadLine()) != null)
-                        {
-                            contents.Enqueue(line.Split('|'));
-                        }
+                        contents.Enqueue(line.Split('|'));
                     }
-                    return contents;
+                    r.Dispose();
                 }
-             
+                return contents;
             }
 
         }
