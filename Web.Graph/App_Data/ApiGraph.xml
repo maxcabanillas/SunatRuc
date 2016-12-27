@@ -506,26 +506,19 @@
             <param name="query">consulta GraphQL</param>
             <returns>resultado de la Consulta</returns>
         </member>
-        <member name="T:Web.Graph.Controllers.ExceptionUtility">
+        <member name="T:Web.Graph.Models.Company">
             <summary>
-            Class for save exceptions.
+            Class for represent Peruvian Company.
             </summary>
         </member>
-        <member name="M:Web.Graph.Controllers.ExceptionUtility.LogException(System.Exception,System.String)">
+        <member name="T:Web.Graph.Models.ListQuery">
             <summary>
-            Añade el detalle de una Excepcion.
-            </summary>
-            <param name="exc"></param>
-            <param name="source"></param>
-        </member>
-        <member name="T:Web.Graph.Models.CompanyType">
-            <summary>
-            Company Type GraphQL
+            Class for Query receive multiple ruc, and multiple responses.
             </summary>
         </member>
-        <member name="M:Web.Graph.Models.CompanyType.#ctor">
+        <member name="M:Web.Graph.Models.ListQuery.#ctor">
             <summary>
-            New Instance of <see cref="T:Web.Graph.Models.CompanyType"/>
+            New Instance of <see cref="T:Web.Graph.Models.ListQuery"/>
             </summary>
         </member>
         <member name="T:Web.Graph.Models.RucsQuery">
@@ -538,15 +531,27 @@
             new Instance of <see cref="T:Web.Graph.Models.RucsQuery"/>
             </summary>
         </member>
-        <member name="T:Web.Graph.Models.ListQuery">
+        <member name="T:Web.Graph.Models.CompanyType">
             <summary>
-            Class for Query receive multiple ruc, and multiple responses.
+            Company Type GraphQL
             </summary>
         </member>
-        <member name="M:Web.Graph.Models.ListQuery.#ctor">
+        <member name="M:Web.Graph.Models.CompanyType.#ctor">
             <summary>
-            New Instance of <see cref="T:Web.Graph.Models.ListQuery"/>
+            New Instance of <see cref="T:Web.Graph.Models.CompanyType"/>
             </summary>
+        </member>
+        <member name="T:Web.Graph.Utils.ExceptionUtility">
+            <summary>
+            Class for save exceptions.
+            </summary>
+        </member>
+        <member name="M:Web.Graph.Utils.ExceptionUtility.LogException(System.Exception,System.String)">
+            <summary>
+            Añade el detalle de una Excepcion.
+            </summary>
+            <param name="exc"></param>
+            <param name="source"></param>
         </member>
     </members>
 </doc>
