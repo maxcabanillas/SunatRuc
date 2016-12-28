@@ -511,6 +511,16 @@
             Class for represent Peruvian Company.
             </summary>
         </member>
+        <member name="T:Web.Graph.Models.DniQuery">
+            <summary>
+            Class Dni Query.
+            </summary>
+        </member>
+        <member name="M:Web.Graph.Models.DniQuery.#ctor">
+            <summary>
+            New Instance for <see cref="T:Web.Graph.Models.DniQuery"/>
+            </summary>
+        </member>
         <member name="T:Web.Graph.Models.ListQuery">
             <summary>
             Class for Query receive multiple ruc, and multiple responses.
@@ -519,6 +529,41 @@
         <member name="M:Web.Graph.Models.ListQuery.#ctor">
             <summary>
             New Instance of <see cref="T:Web.Graph.Models.ListQuery"/>
+            </summary>
+        </member>
+        <member name="T:Web.Graph.Models.Person">
+            <summary>
+            Representa la informacion de una person por DNI.
+            </summary>
+        </member>
+        <member name="P:Web.Graph.Models.Person.PrimerNombre">
+            <summary>
+            Primer Nombre.
+            </summary>
+        </member>
+        <member name="P:Web.Graph.Models.Person.SegundoNombre">
+            <summary>
+            Segundo Nombre
+            </summary>
+        </member>
+        <member name="P:Web.Graph.Models.Person.ApellidoPaterno">
+            <summary>
+            Apellido Paterno.
+            </summary>
+        </member>
+        <member name="P:Web.Graph.Models.Person.ApellidoMaterno">
+            <summary>
+            Apellido Materno.
+            </summary>
+        </member>
+        <member name="T:Web.Graph.Models.PersonType">
+            <summary>
+            The Persontype Class
+            </summary>
+        </member>
+        <member name="M:Web.Graph.Models.PersonType.#ctor">
+            <summary>
+            New Instance of <see cref="T:Web.Graph.Models.PersonType"/>
             </summary>
         </member>
         <member name="T:Web.Graph.Models.RucsQuery">

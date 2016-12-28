@@ -15,11 +15,13 @@ namespace Web.Graph
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}"
             );
-            config.Formatters.Clear();
-            config.Formatters.Add(new JsonMediaTypeFormatter
-            {
-                Indent = true
-            });
+            //config.Formatters.Clear();
+            config.Formatters.Remove(config.Formatters.XmlFormatter);
+            //config.Formatters.Add(new FormUrlEncodedMediaTypeFormatter());
+            //config.Formatters.Add(new JsonMediaTypeFormatter
+            //{
+            //    Indent = true
+            //});
         }
     }
 }

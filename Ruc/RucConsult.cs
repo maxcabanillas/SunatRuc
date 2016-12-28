@@ -17,7 +17,7 @@ namespace Ruc
         private const string UrlImage = "http://e-consultaruc.sunat.gob.pe/cl-ti-itmrconsruc/captcha?accion=image";
         #endregion
 
-        #region Methods
+        #region Export
 
         public Dictionary<string, string> GetInfo(string ruc)
         {

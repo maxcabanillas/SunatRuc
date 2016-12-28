@@ -144,7 +144,10 @@ namespace Ruc
 #endif
                 api.SetVariable("tessedit_char_whitelist", "ABCDEFGHIJKLMNPQRSTUVWXYZ");
                 var text = api.GetTextFromImage(imagen);
-                return text.Trim();
+                return text
+                       .Trim()
+                       .Replace(' ', '\0')
+                       .ToUpper();
             }
         }
 
