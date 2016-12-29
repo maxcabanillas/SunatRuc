@@ -1,6 +1,3 @@
-var setOut = function (jObject) {
-    $('#log').html(syntaxHighlight(JSON.stringify(jObject, undefined, 2)));
-}
 var syntaxHighlight = function (json) {
     if (typeof json != 'string') {
         json = JSON.stringify(json, undefined, 2);
@@ -22,24 +19,31 @@ var syntaxHighlight = function (json) {
         return '<span class="' + cls + '">' + match + '</span>';
     });
 }
+
+var setOut = function (jObject) {
+    $('#log').html(syntaxHighlight(JSON.stringify(jObject, undefined, 2)));
+
+    console.log($('#Result').is(':visible'));
+    $('html, body').animate({
+            scrollTop: $("#Result").offset().top - 90
+        },
+        800);
+}
+
 var send = function () {
-    $frm = $(this);
+    var $frm = $(this);
     $('#log').text("Ejecutando...");
     $.ajax({
         url : $frm.attr('action'),
         method: $frm.attr('method'),
-        data: $frm.serialize(),
+        data: "=" + this.query.value,
         dataType : 'json',
         error: function () {
             alert("Invalid Request");
         }
     }).done(function( msg ) {
-        if(msg.errors) {
-            setOut(msg.errors);
-            return;
-        }
-        setOut(msg.data);
+        setOut(msg);
     });
     return false;
 };
-$('#frm').submit(send);
+$("#frmQuery").submit(send);

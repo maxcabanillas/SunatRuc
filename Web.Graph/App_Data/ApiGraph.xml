@@ -4,6 +4,17 @@
         <name>Web.Graph</name>
     </assembly>
     <members>
+        <member name="T:Web.Graph.BundleConfig">
+            <summary>
+            Bundles class.
+            </summary>
+        </member>
+        <member name="M:Web.Graph.BundleConfig.RegisterBundles(System.Web.Optimization.BundleCollection)">
+            <summary>
+            Register custom bundles.
+            </summary>
+            <param name="bundles"></param>
+        </member>
         <member name="M:Web.Graph.Areas.HelpPage.ApiDescriptionExtensions.GetFriendlyId(System.Web.Http.Description.ApiDescription)">
             <summary>
             Generates an URI-friendly ID for the <see cref="T:System.Web.Http.Description.ApiDescription"/>. E.g. "Get-Values-id_name" instead of "GetValues/{id}?name={name}"
@@ -248,6 +259,16 @@
         <member name="P:Web.Graph.Areas.HelpPage.Models.HelpPageApiModel.ErrorMessages">
             <summary>
             Gets the error messages associated with this model.
+            </summary>
+        </member>
+        <member name="T:Web.Graph.Areas.HelpPage.GraphSample">
+            <summary>
+            This represents a preformatted GraphQL Query sample on the help page. There's a display template named TextSample associated with this class.
+            </summary>
+        </member>
+        <member name="P:Web.Graph.Areas.HelpPage.GraphSample.Text">
+            <summary>
+            Text for sample.
             </summary>
         </member>
         <member name="T:Web.Graph.Areas.HelpPage.HelpPageSampleGenerator">

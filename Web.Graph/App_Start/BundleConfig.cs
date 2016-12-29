@@ -3,9 +3,16 @@ using System.Web.Optimization;
 
 namespace Web.Graph
 {
+    /// <summary>
+    /// Bundles class.
+    /// </summary>
     public class BundleConfig
     {
         // For more information on bundling, visit https://go.microsoft.com/fwlink/?LinkId=301862
+        /// <summary>
+        /// Register custom bundles.
+        /// </summary>
+        /// <param name="bundles"></param>
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
@@ -21,7 +28,9 @@ namespace Web.Graph
                       "~/Scripts/respond.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.css",
+                      "~/Content/bootstrap.css"
+                      ));
+            bundles.Add(new StyleBundle("~/Content/theme").Include(
                       "~/Content/blocks.css",
                       "~/Content/style-library-1.css",
                       "~/Content/font-awesome.min.css"

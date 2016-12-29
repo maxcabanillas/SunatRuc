@@ -1091,7 +1091,7 @@ Version: 1.0
     -webkit-transition: all .3s ease;
     -moz-transition: all .3s ease;
     transition: all .3s ease;
-    -webkit-backface-visibility: none;
+    -webkit-backface-visibility: hidden;
     height: auto;
 }
 
@@ -2459,7 +2459,7 @@ Version: 1.0
 }
 
 .content-3-11 .image-container .background-image-holder {
-	background: url('../images/low-poly-2.jpg') no-repeat center center;
+	background: url('../images/cloud2.png') no-repeat center center;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;

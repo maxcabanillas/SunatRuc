@@ -150,6 +150,7 @@
     <Compile Include="Areas\HelpPage\ModelDescriptions\ParameterDescription.cs" />
     <Compile Include="Areas\HelpPage\ModelDescriptions\SimpleTypeModelDescription.cs" />
     <Compile Include="Areas\HelpPage\Models\HelpPageApiModel.cs" />
+    <Compile Include="Areas\HelpPage\SampleGeneration\GraphSample.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\HelpPageSampleGenerator.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\HelpPageSampleKey.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\ImageSample.cs" />
@@ -180,12 +181,16 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\font-awesome.min.css" />
+    <Content Include="Content\prism.css" />
     <Content Include="Content\style-library-1.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="images\cloud2.png" />
     <Content Include="images\graph-exec.png" />
+    <Content Include="images\prov\graphql.svg" />
+    <Content Include="images\prov\sunat.ico" />
+    <Content Include="images\prov\tesseract.png" />
     <Content Include="images\star-sky.jpg" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -217,6 +222,7 @@
     <Content Include="fonts\fontawesome-webfont.ttf" />
     <Content Include="fonts\fontawesome-webfont.woff" />
     <Content Include="fonts\fontawesome-webfont.woff2" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\GraphSample.cshtml" />
     <None Include="Properties\PublishProfiles\Default Settings.pubxml" />
     <None Include="Properties\PublishProfiles\folder.pubxml" />
     <None Include="Properties\PublishProfiles\smartesraspFtp.pubxml" />
@@ -225,6 +231,7 @@
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\prism.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Web.config" />

@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Net;
-using System.Text;
+using System.Text.RegularExpressions;
 using HtmlAgilityPack;
 using Patagames.Ocr;
 using Patagames.Ocr.Enums;
@@ -92,10 +91,8 @@ namespace Ruc
                 api.Init(@"h:\root\home\giancarlos-001\www\pymestudio\bin", "eng", OcrEngineMode.OEM_TESSERACT_ONLY);
 #endif
                 //api.SetVariable("tessedit_char_whitelist", "ABCDEFGHIJKLMNPQRSTUVWXYZ0123456789");
-                var text = api.GetTextFromImage(imagen);
-                return text.Trim()
-                    .Replace(' ', '\0')
-                    .ToUpper();
+                var text = Regex.Replace(api.GetTextFromImage(imagen), "[^A-Za-z0-9]", string.Empty);
+                return text.ToUpper();
             }
         }
         #endregion

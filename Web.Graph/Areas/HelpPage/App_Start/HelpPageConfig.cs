@@ -12,6 +12,8 @@ using System.Net.Http.Headers;
 using System.Reflection;
 using System.Web;
 using System.Web.Http;
+using System.Web.WebSockets;
+
 #if Handle_PageResultOfT
 using System.Web.Http.OData;
 #endif
@@ -67,8 +69,9 @@ namespace Web.Graph.Areas.HelpPage
 
             //// Uncomment the following to use "1234" directly as the request sample for media type "text/plain" on the controller named "Values"
             //// and action named "Put".
-            var input =
- @"query {
+            var input = new GraphSample(
+ @"
+query {
 	empresa(ruc:""XXXXXXXXXXX"") {
         ruc
         nombre
@@ -95,14 +98,15 @@ namespace Web.Graph.Areas.HelpPage
         percepcion_vinterna
         percepcion_cliquido
     }
-}";
+}");
             config.SetSampleRequest(input, new MediaTypeHeaderValue("text/json"), "Ruc", "GET", "query");
             config.SetSampleRequest(input, new MediaTypeHeaderValue("application/x-www-form-urlencoded"), "Ruc", "POST");
-            config.SetSampleRequest("No permitido", new MediaTypeHeaderValue("text/json"), "Ruc", "POST");
-            config.SetSampleRequest("No permitido", new MediaTypeHeaderValue("application/json"), "Ruc", "POST");
+            config.SetSampleRequest(null, new MediaTypeHeaderValue("text/json"), "Ruc", "POST");
+            config.SetSampleRequest(null, new MediaTypeHeaderValue("application/json"), "Ruc", "POST");
 
-            var resp =
-@"{
+            var resp = new TextSample(
+@"
+{
   ""data"": {
     ""empresa"": {
       ""ruc"": ""XXXXXXXXXXX"",
@@ -131,7 +135,7 @@ namespace Web.Graph.Areas.HelpPage
       ""percepcion_cliquido"": ""-""
     }
   }
-}";
+}");
             config.SetSampleResponse(resp, new MediaTypeHeaderValue("text/json"), "Ruc", "GET");
             config.SetSampleResponse(resp, new MediaTypeHeaderValue("application/json"), "Ruc", "GET");
             config.SetSampleResponse(resp, new MediaTypeHeaderValue("text/json"), "Ruc", "POST");

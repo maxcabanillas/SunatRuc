@@ -21,5 +21,28 @@ namespace RucTests
             TestContext.WriteLine($"DNI: {dni}");
             TestContext.WriteLine($"NOMBRES: {string.Join("-", res)}");
         }
+
+
+        [Test]
+        public void DniTest2()
+        {
+            var dni = "06477277";
+            var consult = new DniConsult();
+            var res = consult.Get(dni);
+            Assert.IsNotNull(res);
+            Assert.IsTrue(res.Length >= 3);
+            StringAssert.StartsWith("PEDRO PABLO", res[0]);
+            Assert.IsTrue(res[2] == "GODARD");
+            TestContext.WriteLine($"DNI: {dni}");
+            TestContext.WriteLine($"NOMBRES: {string.Join("-", res)}");
+        }
+
+        [Test]
+        public void DniErrorTest()
+        {
+            var consult = new DniConsult();
+            var res = consult.Get("4212339");
+            StringAssert.Contains("El DNI", string.Join(" ", res));
+        }
     }
 }

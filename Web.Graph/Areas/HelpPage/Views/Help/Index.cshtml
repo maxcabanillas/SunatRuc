@@ -1,8 +1,6 @@
-@using System.Web.Http
 @using System.Web.Http.Controllers
 @using System.Web.Http.Description
 @using System.Collections.ObjectModel
-@using Web.Graph.Areas.HelpPage.Models
 @model Collection<ApiDescription>
 
 @{
@@ -11,11 +9,21 @@
     // Group APIs by controller
     ILookup<HttpControllerDescriptor, ApiDescription> apiGroups = Model.ToLookup(api => api.ActionDescriptor.ControllerDescriptor);
 }
-
+@section styles
+{
+    <style>
+        .help-page .spacer {
+            padding-bottom: 5rem;
+        }
+        .help-page .reduced {
+            padding: 60px 0 0 0;
+        }
+    </style>
+}
 <link type="text/css" href="~/Areas/HelpPage/HelpPage.css" rel="stylesheet" />
 <div class="container">
     <header class="help-page">
-        <section id="content-3-7" class="content-block content-3-7">
+        <section id="content-3-7" class="content-3-7 reduced">
             <div class="container">
                 <div class="col-sm-12">
                     <div class="underlined-title">
@@ -39,7 +47,7 @@
                 <img src="http://graphql.org/img/logo.svg" alt="GraphQL" height="100" />
             </div>
         </section>
-        <section class="content-wrapper main-content clear-fix">
+        <section class="content-wrapper main-content clear-fix spacer">
             @foreach (var group in apiGroups)
             {
                 @Html.DisplayFor(m => group, "ApiGroup")

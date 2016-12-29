@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Text.RegularExpressions;
 using HtmlAgilityPack;
 using Patagames.Ocr;
 using Patagames.Ocr.Enums;
@@ -84,7 +85,7 @@ namespace Ruc
                 doc.LoadHtml(html);
                 var nods = doc.DocumentNode.SelectNodes("//a[@target='_blank']");
                 if(nods == null) 
-                    throw new Exception("Catpcha Incorrecto");
+                    throw new ArgumentException("Catpcha Incorrecto", "captcha");
                 var link = nods[0].Attributes["href"].Value;
                 return DownloadZipAndProcess(link);
             } 
@@ -142,12 +143,9 @@ namespace Ruc
 #else
                 api.Init(@"h:\root\home\giancarlos-001\www\pymestudio\bin", "eng", OcrEngineMode.OEM_TESSERACT_ONLY);
 #endif
-                api.SetVariable("tessedit_char_whitelist", "ABCDEFGHIJKLMNPQRSTUVWXYZ");
-                var text = api.GetTextFromImage(imagen);
-                return text
-                       .Trim()
-                       .Replace(' ', '\0')
-                       .ToUpper();
+                //api.SetVariable("tessedit_char_whitelist", "ABCDEFGHIJKLMNPQRSTUVWXYZ"); // Not Work
+                var text = Regex.Replace(api.GetTextFromImage(imagen), "[^A-Za-z]", string.Empty);
+                return text.ToUpper();
             }
         }
 
