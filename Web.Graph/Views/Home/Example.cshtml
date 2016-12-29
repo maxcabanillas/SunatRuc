@@ -32,6 +32,8 @@
 </header>
 <section id="content-3-8" class="content-3-8">
     <div class="container">
+        <button class="btn btn-primary" onclick="window.open('@Url.Action("Demo", "Home")')">Probar Demo <span class="fa fa-play"></span></button>
+        <hr/>
         <div class="row">
             <div class="col-md-10">
                 <div class="row underlined-title">
@@ -149,6 +151,42 @@ class Program
         }
     }
 }
+                        </code></pre>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-10">
+                <div class="row underlined-title">
+                    <h1>PHP</h1>
+                    <hr>
+                </div>
+                <div class="row">
+                    <pre><code class="language-php">
+&lt;?php
+$query = "
+query {
+	empresa(ruc:\"20254138577\") {
+		ruc
+		nombre
+        direccion
+    }
+}";
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL,"http://localhost:54866/api/ruc");
+curl_setopt($ch, CURLOPT_POST, true);
+curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query(array('' =&gt; $query)));
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+$jsonString = curl_exec ($ch);
+curl_close ($ch);
+$out = json_decode($jsonString);
+$res = $out-&gt;data-&gt;empresa;
+
+echo "RUC : $res-&gt;ruc";
+echo "Nombre : $res-&gt;nombre";
+echo "Direccion :  $res-&gt;direccion";
+?&gt;
                         </code></pre>
                 </div>
             </div>
