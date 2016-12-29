@@ -22,7 +22,10 @@ namespace Web.Graph
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
+                      "~/Content/blocks.css",
+                      "~/Content/style-library-1.css",
+                      "~/Content/font-awesome.min.css"
+                      ));
         }
     }
 }

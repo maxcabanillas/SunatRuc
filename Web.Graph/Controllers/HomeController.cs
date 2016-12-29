@@ -14,5 +14,17 @@ namespace Web.Graph.Controllers
 
             return View();
         }
+
+        public ActionResult Example()
+        {
+            ViewBag.Title = "Ejemplo";
+            return View();
+        }
+
+        public ActionResult Demo()
+        {
+            ViewBag.Title = "Demo";
+            return View();
+        }
     }
 }

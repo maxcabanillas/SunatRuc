@@ -6,36 +6,45 @@
 @model Collection<ApiDescription>
 
 @{
-    ViewBag.Title = "SUNAT-RUC Web API Help Page";
+    ViewBag.Title = "Web API Help Page";
 
     // Group APIs by controller
     ILookup<HttpControllerDescriptor, ApiDescription> apiGroups = Model.ToLookup(api => api.ActionDescriptor.ControllerDescriptor);
 }
 
 <link type="text/css" href="~/Areas/HelpPage/HelpPage.css" rel="stylesheet" />
-<header class="help-page">
-    <div class="content-wrapper">
-        <div class="float-left">
-            <h1>@ViewBag.Title</h1>
-        </div>
+<div class="container">
+    <header class="help-page">
+        <section id="content-3-7" class="content-block content-3-7">
+            <div class="container">
+                <div class="col-sm-12">
+                    <div class="underlined-title">
+                        <h1>@ViewBag.Title</h1>
+                        <hr>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </header>
+
+    <div id="body" class="help-page">
+        <section class="featured">
+            <div class="content-wrapper">
+                <h2>Introduccion</h2>
+                <p>
+                    Servicio para consulta de RUC empleando <a href="http://graphql.org/">GraphQL</a>.
+                </p>
+            </div>
+            <div style="margin: auto; text-align: center">
+                <img src="http://graphql.org/img/logo.svg" alt="GraphQL" height="100" />
+            </div>
+        </section>
+        <section class="content-wrapper main-content clear-fix">
+            @foreach (var group in apiGroups)
+            {
+                @Html.DisplayFor(m => group, "ApiGroup")
+            }
+        </section>
     </div>
-</header>
-<div id="body" class="help-page">
-    <section class="featured">
-        <div class="content-wrapper">
-            <h2>Introduccion</h2>
-            <p>
-                Servicio para consulta de RUC empleando <a href="http://graphql.org/">GraphQL</a>.
-            </p>
-        </div>
-        <div style="margin: auto; text-align: center">
-            <img src="http://graphql.org/img/logo.svg" alt="GraphQL" height="100" />  
-        </div>
-    </section>
-    <section class="content-wrapper main-content clear-fix">
-        @foreach (var group in apiGroups)
-        {
-            @Html.DisplayFor(m => group, "ApiGroup")
-        }
-    </section>
 </div>
+

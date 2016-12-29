@@ -97,8 +97,9 @@ namespace Web.Graph.Areas.HelpPage
     }
 }";
             config.SetSampleRequest(input, new MediaTypeHeaderValue("text/json"), "Ruc", "GET", "query");
-            config.SetSampleRequest(input, new MediaTypeHeaderValue("application/json"), "Ruc", "POST");
-            config.SetSampleRequest(input, new MediaTypeHeaderValue("text/json"), "Ruc", "POST");
+            config.SetSampleRequest(input, new MediaTypeHeaderValue("application/x-www-form-urlencoded"), "Ruc", "POST");
+            config.SetSampleRequest("No permitido", new MediaTypeHeaderValue("text/json"), "Ruc", "POST");
+            config.SetSampleRequest("No permitido", new MediaTypeHeaderValue("application/json"), "Ruc", "POST");
 
             var resp =
 @"{
