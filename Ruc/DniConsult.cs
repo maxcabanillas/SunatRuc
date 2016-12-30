@@ -4,6 +4,8 @@ using System.Drawing;
 using System.IO;
 using System.Net;
 using System.Text.RegularExpressions;
+using AForge;
+using AForge.Imaging.Filters;
 using HtmlAgilityPack;
 using Patagames.Ocr;
 using Patagames.Ocr.Enums;
@@ -65,22 +67,25 @@ namespace Ruc
                 return html;
             }
         }
-        private static void ToOptimize(Bitmap bm)
+        private static void ToOptimize(ref Bitmap img)
         {
-            for (var x = 0; x < bm.Width; x++)
-                for (var y = 0; y < bm.Height; y++)
-                {
-                    var pix = bm.GetPixel(x, y);
-                    var isBlue = pix.B > 130 && pix.R < 20 && pix.G < 130;
-                    bm.SetPixel(x, y, isBlue ? Color.Black : Color.White);
-                }
-            //bm.Save("image.jpg");
+            var inverter = new Invert();
+            var cor = new ColorFiltering
+            {
+                Blue = new IntRange(110, 255),
+                Red = new IntRange(0, 30),
+                Green = new IntRange(0, 50)
+            };
+            var sharp = new Sharpen();
+            var seq = new FiltersSequence(cor, inverter, sharp);
+            img = seq.Apply(img);
         }
         #endregion
+
         #region CapchaResolver
         public override string GetCatpcha(Bitmap imagen)
         {
-            ToOptimize(imagen);
+            ToOptimize(ref imagen);
             using (var api = OcrApi.Create())
             {
                 //Remote Server
@@ -88,9 +93,9 @@ namespace Ruc
                 api.Init(@"C:\Users\Administrador\Documents\History\SunatRuc\Web.Graph\bin", "eng", OcrEngineMode.OEM_TESSERACT_ONLY);
                 //api.Init(@"C:\Users\Giansalex\Source\Repos\github\SunatRuc\Ruc", "eng", OcrEngineMode.OEM_TESSERACT_ONLY);
 #else
-                api.Init(@"h:\root\home\giancarlos-001\www\pymestudio\bin", "eng", OcrEngineMode.OEM_TESSERACT_ONLY);
+                api.Init(string.Empty, "eng", OcrEngineMode.OEM_TESSERACT_ONLY);
 #endif
-                //api.SetVariable("tessedit_char_whitelist", "ABCDEFGHIJKLMNPQRSTUVWXYZ0123456789");
+                api.SetVariable("tessedit_char_whitelist", "ABCDEFGHIJKLMNPQRSTUVWXYZ0123456789");
                 var text = Regex.Replace(api.GetTextFromImage(imagen), "[^A-Za-z0-9]", string.Empty);
                 return text.ToUpper();
             }

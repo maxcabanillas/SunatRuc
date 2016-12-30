@@ -1,24 +1,3 @@
-var syntaxHighlight = function (json) {
-    if (typeof json != 'string') {
-        json = JSON.stringify(json, undefined, 2);
-    }
-    json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-    return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
-        var cls = 'number';
-        if (/^"/.test(match)) {
-            if (/:$/.test(match)) {
-                cls = 'key';
-            } else {
-                cls = 'string';
-            }
-        } else if (/true|false/.test(match)) {
-            cls = 'boolean';
-        } else if (/null/.test(match)) {
-            cls = 'null';
-        }
-        return '<span class="' + cls + '">' + match + '</span>';
-    });
-}
 
 var setOut = function (jObject) {
     window.ace.edit("editorO").setValue(JSON.stringify(jObject, undefined, 2));
@@ -62,7 +41,7 @@ var staticWordCompleter = {
     getCompletions: function (editor, session, pos, prefix, callback) {
         var wordList = ["query", "empresa", "ruc", "nombre", "tipo_contribuyente", "profesion", "nombre_comercial", "condicion_contribuyente",
             "estado_contribuyente", "fecha_inscripcion", "fecha_inicio", "departamento", "provincia", "distrito", "direccion",
-            "telefono", "fax", "comercio_exterior", "principal", "secundario2", "rus", "buen_contribuyente", "retencion",
+            "telefono", "fax", "comercio_exterior", "principal","secundario1", "secundario2", "rus", "buen_contribuyente", "retencion",
             "percepcion_vinterna", "percepcion_cliquido"];
         callback(null, wordList.map(function (word) {
             return {

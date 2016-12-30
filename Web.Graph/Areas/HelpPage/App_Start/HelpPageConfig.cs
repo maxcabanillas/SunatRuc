@@ -69,6 +69,8 @@ namespace Web.Graph.Areas.HelpPage
 
             //// Uncomment the following to use "1234" directly as the request sample for media type "text/plain" on the controller named "Values"
             //// and action named "Put".
+
+            #region RUC
             var input = new GraphSample(
  @"
 query {
@@ -140,6 +142,41 @@ query {
             config.SetSampleResponse(resp, new MediaTypeHeaderValue("application/json"), "Ruc", "GET");
             config.SetSampleResponse(resp, new MediaTypeHeaderValue("text/json"), "Ruc", "POST");
             config.SetSampleResponse(resp, new MediaTypeHeaderValue("application/json"), "Ruc", "POST");
+            #endregion
+
+            #region DNI
+            input = new GraphSample(
+ @"
+query {
+	persona(ruc:""XXXXXXXX"") {
+		primer_nombre
+		segundo_nombre
+		apellido_paterno
+		apellido_materno
+    }
+}");
+            config.SetSampleRequest(input, new MediaTypeHeaderValue("text/json"), "Dni", "GET", "query");
+            config.SetSampleRequest(input, new MediaTypeHeaderValue("application/x-www-form-urlencoded"), "Dni", "POST");
+            config.SetSampleRequest(null, new MediaTypeHeaderValue("text/json"), "Dni", "POST");
+            config.SetSampleRequest(null, new MediaTypeHeaderValue("application/json"), "Dni", "POST");
+
+            resp = new TextSample(
+@"
+{
+  ""data"": {
+    ""persona"": {
+        ""primer_nombre"" : ""JUAN"",
+		""segundo_nombre"" : ""LUIS"",
+		""apellido_paterno"" ""SOLIZ"",
+		""apellido_materno"" : ""ROBLES""
+    }
+  }
+}");
+            config.SetSampleResponse(resp, new MediaTypeHeaderValue("text/json"), "Dni", "GET");
+            config.SetSampleResponse(resp, new MediaTypeHeaderValue("application/json"), "Dni", "GET");
+            config.SetSampleResponse(resp, new MediaTypeHeaderValue("text/json"), "Dni", "POST");
+            config.SetSampleResponse(resp, new MediaTypeHeaderValue("application/json"), "Dni", "POST");
+            #endregion
             //config.SetSampleResponse(new ImageSample("http://pngimg.com/upload/banana_PNG842.png"), new MediaTypeHeaderValue("application/json"), "Ruc", "POST");
 
             //// Uncomment the following to use the image on "../images/aspNetHome.png" directly as the response sample for media type "image/png"

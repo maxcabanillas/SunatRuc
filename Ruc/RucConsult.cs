@@ -7,6 +7,7 @@ using System.Net;
 using HtmlAgilityPack;
 using Patagames.Ocr;
 using Patagames.Ocr.Enums;
+using Ruc.Helper;
 
 namespace Ruc
 {
@@ -23,7 +24,6 @@ namespace Ruc
         {
             if(ruc.Length != 11)
                 throw new ArgumentException("El ruc debe contener 11 digitos", nameof(ruc));
-            Optimize = true;
             var catpcha = GetCaptcha(UrlImage);
             var url = UrlConsult + $"?accion=consPorRuc&nroRuc={ruc}&codigo={catpcha}&tipdoc=";
             var http = CreateRequest(url);
@@ -161,8 +161,7 @@ namespace Ruc
         #region CatpcharResolver
         public override string GetCatpcha(Bitmap imagen)
         {
-            if (Optimize)
-                ImageToBlackAndWhite(imagen);
+            ImageFilters.ImageToBlackAndWhite(imagen);
             using (var api = OcrApi.Create())
             {
                 api.Init(string.Empty, "eng", OcrEngineMode.OEM_TESSERACT_ONLY);

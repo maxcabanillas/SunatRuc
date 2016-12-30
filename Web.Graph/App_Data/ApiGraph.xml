@@ -508,6 +508,25 @@
             </summary>
             <param name="documentPath">The physical path to XML document.</param>
         </member>
+        <member name="T:Web.Graph.Controllers.DniController">
+            <summary>
+            Consulta DNI - Reniec
+            </summary>
+        </member>
+        <member name="M:Web.Graph.Controllers.DniController.Get(System.String)">
+            <summary>
+            Retorna la informacion del Dni.
+            </summary>
+            <param name="query">consulta GraphQL</param>
+            <returns>resultado de la Consulta</returns>
+        </member>
+        <member name="M:Web.Graph.Controllers.DniController.Post(System.String)">
+            <summary>
+            Retorna la informacion del Dni.
+            </summary>
+            <param name="query">consulta GraphQL</param>
+            <returns>resultado de la Consulta</returns>
+        </member>
         <member name="M:Web.Graph.Controllers.HomeController.Index">
             <summary>
             Index action.

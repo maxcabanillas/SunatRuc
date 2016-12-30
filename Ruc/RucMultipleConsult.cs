@@ -26,9 +26,7 @@ namespace Ruc
         {
             if (rucs.Length == 0)
                 throw new ArgumentException("Se requiere almenos un Ruc", nameof(rucs));
-            // Considerar la carga que aumenta.
-            Optimize = true;
-            
+
             //if (rucs.Length > 10)
             //{
             //    return GetOpcion2(rucs);
@@ -129,11 +127,7 @@ namespace Ruc
         #region CatpcharResolver
         public override string GetCatpcha(Bitmap imagen)
         {
-#if !DEBUG
-            //OcrApi.PathToEngine = @"h:\root\home\giancarlos-001\www\pymestudio\bin\x86\tesseract.dll";
-#endif
-            if (Optimize)
-                ImageToBlackAndWhite(imagen);
+            ImageFilters.ImageToBlackAndWhite(imagen);
             using (var api = OcrApi.Create())
             {
                 //Remote Server
@@ -143,7 +137,7 @@ namespace Ruc
 #else
                 api.Init(@"h:\root\home\giancarlos-001\www\pymestudio\bin", "eng", OcrEngineMode.OEM_TESSERACT_ONLY);
 #endif
-                //api.SetVariable("tessedit_char_whitelist", "ABCDEFGHIJKLMNPQRSTUVWXYZ"); // Not Work
+                api.SetVariable("tessedit_char_whitelist", "ABCDEFGHIJKLMNPQRSTUVWXYZ"); // Not Work
                 var text = Regex.Replace(api.GetTextFromImage(imagen), "[^A-Za-z]", string.Empty);
                 return text.ToUpper();
             }

@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using GraphQL.Types;
 using Ruc;
 using Web.Graph.Utils;
@@ -18,7 +15,7 @@ namespace Web.Graph.Models
         /// </summary>
         public DniQuery()
         {
-            Field<CompanyType>(
+            Field<PersonType>(
             "persona",
             arguments: new QueryArguments(new QueryArgument<StringGraphType> { Name = "dni" }),
             resolve: context =>

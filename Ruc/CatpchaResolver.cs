@@ -16,13 +16,6 @@ namespace Ruc
         private readonly CookieContainer _cookies;
         #endregion
 
-        #region Properties
-        /// <summary>
-        /// Optimiza la imagen para que pueda ser facilmente reconocida.
-        /// </summary>
-        public bool Optimize { get; set; }
-        #endregion
-
         #region Construct
         static CatpchaResolver()
         {
@@ -90,16 +83,6 @@ namespace Ruc
                 if (wr == null) throw new ArgumentException("Not found resource");
                 return (Bitmap)Image.FromStream(wr);
             }
-        }
-
-        protected static void ImageToBlackAndWhite(Bitmap bm)
-        {
-            for (var x = 0; x < bm.Width; x++)
-                for (var y = 0; y < bm.Height; y++)
-                {
-                    var pix = bm.GetPixel(x, y);
-                    bm.SetPixel(x, y, pix.GetBrightness() > 0.90f ? Color.White : Color.Black);
-                }
         }
         #endregion
 
