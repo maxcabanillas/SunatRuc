@@ -167,7 +167,7 @@ query {
     ""persona"": {
         ""primer_nombre"" : ""JUAN"",
 		""segundo_nombre"" : ""LUIS"",
-		""apellido_paterno"" ""SOLIZ"",
+		""apellido_paterno"" : ""SOLIZ"",
 		""apellido_materno"" : ""ROBLES""
     }
   }
