@@ -68,7 +68,7 @@ var staticWordCompleter = {
             return {
                 caption: word,
                 value: word,
-                meta: "static"
+                meta: "GraphQL"
             };
         }));
     }

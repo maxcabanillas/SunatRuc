@@ -32,9 +32,21 @@
 </header>
 <section id="content-3-8" class="content-3-8">
     <div class="container">
-        <button class="btn btn-primary" onclick="window.open('@Url.Action("Demo", "Home")')">Probar Demo <span class="fa fa-play"></span></button>
-        <hr/>
         <div class="row">
+                <div class="col-md-6">
+                    <button class="btn btn-primary" onclick="window.open('@Url.Action("Demo", "Home")')">Probar Demo <span class="fa fa-play"></span></button>
+                </div>
+                <div class="col-md-4 col-md-offset-2">
+                    <div class="btn-group">
+                        <a class="btn btn-default" href="#eJava">Java</a>
+                        <a class="btn btn-default" href="#eCsharp">C#</a>
+                        <a class="btn btn-default" href="#ePhp">PHP</a>
+                        <a class="btn btn-default" href="#ePy">Python</a>
+                    </div>
+                </div>
+            </div>
+        <hr/>
+        <div id="eJava" class="row">
             <div class="col-md-10">
                 <div class="row underlined-title">
                     <h1>Java</h1>
@@ -93,7 +105,7 @@ public class Program {
                 </div>
             </div>
         </div>
-        <div class="row">
+        <div id="eCsharp" class="row">
             <div class="col-md-10">
                 <div class="row underlined-title">
                     <h1>C#</h1>
@@ -122,8 +134,8 @@ class Program
         query { 
             empresa(ruc:""20100070970"") 
                 { 
-                    ruc, 
-                    nombre, 
+                    ruc
+                    nombre
                     direccion 
                 } 
             }";
@@ -155,7 +167,7 @@ class Program
                 </div>
             </div>
         </div>
-        <div class="row">
+        <div id="ePhp" class="row">
             <div class="col-md-10">
                 <div class="row underlined-title">
                     <h1>PHP</h1>
@@ -187,6 +199,39 @@ echo "RUC : $res-&gt;ruc";
 echo "Nombre : $res-&gt;nombre";
 echo "Direccion :  $res-&gt;direccion";
 ?&gt;
+                        </code></pre>
+                </div>
+            </div>
+        </div>
+        <div id="ePy" class="row">
+            <div class="col-md-10">
+                <div class="row underlined-title">
+                    <h1>Python</h1>
+                    <hr>
+                </div>
+                <div class="row">
+                    <pre><code class="language-python">
+import requests
+
+def main():
+	query = """
+       query { 
+        empresa(ruc:"20254138577") 
+            { 
+                ruc
+                nombre
+                direccion
+            } 
+        }
+	"""
+	r = requests.post('http://localhost:54866/api/ruc', data = {'' : query})
+	json = r.json()
+	empresa = json['data']['empresa']
+	print ('RUC : ' + empresa['ruc'])
+	print ('NOMBRE : ' + empresa['nombre'])
+	print ('DIRECCION : ' + empresa['direccion'])
+	
+main()
                         </code></pre>
                 </div>
             </div>

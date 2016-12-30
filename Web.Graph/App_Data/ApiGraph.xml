@@ -508,6 +508,24 @@
             </summary>
             <param name="documentPath">The physical path to XML document.</param>
         </member>
+        <member name="M:Web.Graph.Controllers.HomeController.Index">
+            <summary>
+            Index action.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Graph.Controllers.HomeController.Example">
+            <summary>
+            Example action.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Graph.Controllers.HomeController.Demo">
+            <summary>
+            Demo action.
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:Web.Graph.Controllers.RucController">
             <summary>
             Consulta Ruc - SUNAT
