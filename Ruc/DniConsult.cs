@@ -93,7 +93,7 @@ namespace Ruc
                 api.Init(@"C:\Users\Administrador\Documents\History\SunatRuc\Web.Graph\bin", "eng", OcrEngineMode.OEM_TESSERACT_ONLY);
                 //api.Init(@"C:\Users\Giansalex\Source\Repos\github\SunatRuc\Ruc", "eng", OcrEngineMode.OEM_TESSERACT_ONLY);
 #else
-                api.Init(string.Empty, "eng", OcrEngineMode.OEM_TESSERACT_ONLY);
+                api.Init(@"h:\root\home\giancarlos-001\www\pymestudio\bin", "eng", OcrEngineMode.OEM_TESSERACT_ONLY);
 #endif
                 api.SetVariable("tessedit_char_whitelist", "ABCDEFGHIJKLMNPQRSTUVWXYZ0123456789");
                 var text = Regex.Replace(api.GetTextFromImage(imagen), "[^A-Za-z0-9]", string.Empty);
