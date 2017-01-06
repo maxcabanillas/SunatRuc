@@ -10,14 +10,14 @@ namespace Ruc
     /// <summary>
     /// Class for Resolve Captcha (SUNAT).
     /// </summary>
-    public abstract class CatpchaResolver
+    public abstract class CaptchaResolver
     {
         #region Fields
         private readonly CookieContainer _cookies;
         #endregion
 
         #region Construct
-        static CatpchaResolver()
+        static CaptchaResolver()
         {
             ServicePointManager.CheckCertificateRevocationList = false;
             if (ServicePointManager.ServerCertificateValidationCallback == null)
@@ -25,9 +25,9 @@ namespace Ruc
         }
 
         /// <summary>
-        /// New Instance of <see cref="CatpchaResolver"/>
+        /// New Instance of <see cref="CaptchaResolver"/>
         /// </summary>
-        protected CatpchaResolver()
+        protected CaptchaResolver()
         {
             _cookies = new CookieContainer();
         }
@@ -49,8 +49,8 @@ namespace Ruc
         /// <returns>string that contains captcha</returns>
         public string GetCaptcha(string url)
         {
-            var ima = GetImageInternal(url);
-            return GetCatpcha(ima);
+            using (var ima = GetImageInternal(url))
+                return GetCatpcha(ima);
         }
 
         /// <summary>

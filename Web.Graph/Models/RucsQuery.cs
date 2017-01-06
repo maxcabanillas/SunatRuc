@@ -2,7 +2,6 @@
 using System.Linq;
 using GraphQL.Types;
 using Ruc;
-using Web.Graph.Utils;
 
 namespace Web.Graph.Models
 {
@@ -22,6 +21,8 @@ namespace Web.Graph.Models
                 resolve: context =>
                 {
                     var ruc = context.GetArgument<string>("ruc");
+                    byte intents = 3;
+                    start:
                     try
                     {
                         //Validar ruc.
@@ -40,7 +41,9 @@ namespace Web.Graph.Models
                     }
                     catch (Exception e)
                     {
-                        ExceptionUtility.LogException(e, "Consultando :" + ruc);
+                        if (e is CaptchaException && intents-- > 0)
+                            goto start;
+                        Elmah.ErrorSignal.FromCurrentContext().Raise(e);
                     }
                     return null;
                 }
@@ -51,6 +54,8 @@ namespace Web.Graph.Models
                 resolve: context =>
                 {
                     var dni = context.GetArgument<string>("dni");
+                    byte intents = 3;
+                    start:
                     try
                     {
                         //Validar DNI.
@@ -69,7 +74,9 @@ namespace Web.Graph.Models
                     }
                     catch (Exception e)
                     {
-                        ExceptionUtility.LogException(e, "Consultando :" + dni);
+                        if (e is CaptchaException && intents-- > 0)
+                            goto start;
+                        Elmah.ErrorSignal.FromCurrentContext().Raise(e);
                     }
                     return null;
                 }

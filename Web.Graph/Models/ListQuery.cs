@@ -41,7 +41,7 @@ namespace Web.Graph.Models
                     }
                     catch (Exception e)
                     {
-                        ExceptionUtility.LogException(e, "Query GraphQL");
+                        Elmah.ErrorSignal.FromCurrentContext().Raise(e);
                     }
                     return response;
                 }

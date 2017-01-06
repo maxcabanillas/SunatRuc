@@ -12,7 +12,7 @@ using Patagames.Ocr.Enums;
 
 namespace Ruc
 {
-    public class DniConsult : CatpchaResolver
+    public class DniConsult : CaptchaResolver
     {
         #region Fields
         private const string UrlConsult = "https://cel.reniec.gob.pe/valreg/valreg.do";
@@ -32,15 +32,15 @@ namespace Ruc
 
         private string[] GetInternal(string dni)
         {
-            var catpcha = GetCaptcha(UrlImage);
-            var url = UrlConsult + $"?accion=buscar&nuDni={dni}&imagen={catpcha}";
+            var captcha = GetCaptchaString();
+            var url = UrlConsult + $"?accion=buscar&nuDni={dni}&imagen={captcha}";
             var http = CreateRequest(url);
             var html = GetContent((HttpWebResponse)http.GetResponse());
             var doc = new HtmlDocument();
             doc.LoadHtml(HtmlEntity.DeEntitize(html));
             var nodName = doc.DocumentNode.SelectSingleNode("/html/body/table/tr[4]/td[1]/table[2]/tr[2]/td");
             var fullName = nodName.FirstChild.InnerText;
-            if (fullName.StartsWith("Ingrese el código")) throw new ArgumentException("Captcha Incorrecto", nameof(catpcha));
+            if (fullName.StartsWith("Ingrese el código")) throw new CaptchaException("Captcha Incorrecto");
             var values = new Queue<string>();
             using (var reader = new StringReader(fullName))
             {
@@ -80,6 +80,17 @@ namespace Ruc
             var seq = new FiltersSequence(cor, inverter, sharp);
             img = seq.Apply(img);
         }
+
+        private string GetCaptchaString()
+        {
+            for (byte i = 0; i < 4; i++)
+            {
+                var captcha = GetCaptcha(UrlImage);
+                if (captcha != null && captcha.Length == 4)
+                    return captcha;
+            }
+            throw new ArgumentException("No se pudo obtener el capcha para el DNI despues de 4 intentos.");
+        }
         #endregion
 
         #region CapchaResolver
@@ -90,8 +101,8 @@ namespace Ruc
             {
                 //Remote Server
 #if DEBUG
-                api.Init(@"C:\Users\Administrador\Documents\History\SunatRuc\Web.Graph\bin", "eng", OcrEngineMode.OEM_TESSERACT_ONLY);
-                //api.Init(@"C:\Users\Giansalex\Source\Repos\github\SunatRuc\Ruc", "eng", OcrEngineMode.OEM_TESSERACT_ONLY);
+                //api.Init(@"C:\Users\Administrador\Documents\History\SunatRuc\Web.Graph\bin", "eng", OcrEngineMode.OEM_TESSERACT_ONLY);
+                api.Init(@"C:\Users\Giansalex\Source\Repos\github\SunatRuc\Ruc", "eng", OcrEngineMode.OEM_TESSERACT_ONLY);
 #else
                 api.Init(@"h:\root\home\giancarlos-001\www\pymestudio\bin", "eng", OcrEngineMode.OEM_TESSERACT_ONLY);
 #endif

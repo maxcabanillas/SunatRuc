@@ -11,7 +11,7 @@ using Ruc.Helper;
 
 namespace Ruc
 {
-    public class RucConsult : CatpchaResolver
+    public class RucConsult : CaptchaResolver
     {
         #region Fields
         private const string UrlConsult = "http://e-consultaruc.sunat.gob.pe/cl-ti-itmrconsruc/jcrS00Alias";

@@ -13,7 +13,7 @@ using Ruc.Helper;
 
 namespace Ruc
 {
-    public class RucMultipleConsult : CatpchaResolver
+    public class RucMultipleConsult : CaptchaResolver
     {
         #region Fields
         private const string UrlConsult = "http://www.sunat.gob.pe/cl-ti-itmrconsmulruc/jrmS00Alias";
@@ -31,8 +31,8 @@ namespace Ruc
             //{
             //    return GetOpcion2(rucs);
             //}
-            var catpcha = GetCaptcha(UrlImage);
-            var url = UrlConsult + "?accion=consManual&" + string.Join("&", rucs.Select(ruc => "selRuc=" + ruc)) + "&codigoM=" + catpcha;
+            var captcha = GetCaptchaString();
+            var url = UrlConsult + "?accion=consManual&" + string.Join("&", rucs.Select(ruc => "selRuc=" + ruc)) + "&codigoM=" + captcha;
             var http = CreateRequest(url);
             return GetProcessResponse((HttpWebResponse)http.GetResponse());
         }
@@ -48,7 +48,7 @@ namespace Ruc
             {
                 builder.AppendLine(ruc + "|");
             }
-            var catpcha = GetCaptcha(UrlImage);
+            var captcha = GetCaptchaString();
             var zip = ZipHelper.Compress(new KeyValuePair<string, byte[]>("ruc.txt", Encoding.ASCII.GetBytes(builder.ToString())));
             var postParameters = new Dictionary<string, object>
             {
@@ -60,7 +60,7 @@ namespace Ruc
                         FileName = "rucs.zip"
                     }
                 },
-                {"codigoA", catpcha}
+                {"codigoA", captcha}
             };
 
             HttpWebResponse webResponse = MultipartFormDataPost(UrlConsult, postParameters);
@@ -83,7 +83,7 @@ namespace Ruc
                 doc.LoadHtml(html);
                 var nods = doc.DocumentNode.SelectNodes("//a[@target='_blank']");
                 if(nods == null) 
-                    throw new ArgumentException("Catpcha Incorrecto", "captcha");
+                    throw new CaptchaException("Catpcha Incorrecto");
                 var link = nods[0].Attributes["href"].Value;
                 return DownloadZipAndProcess(link);
             } 
@@ -121,7 +121,16 @@ namespace Ruc
             }
 
         }
-
+        private string GetCaptchaString()
+        {
+            for (byte i = 0; i < 4; i++)
+            {
+                var captcha = GetCaptcha(UrlImage);
+                if (captcha != null && captcha.Length == 4)
+                    return captcha;
+            }
+            throw new ArgumentException("No se pudo obtener el capcha para el Ruc despues de 4 intentos.");
+        }
         #endregion
 
         #region CatpcharResolver
@@ -132,8 +141,8 @@ namespace Ruc
             {
                 //Remote Server
 #if DEBUG
-                api.Init(@"C:\Users\Administrador\Documents\History\SunatRuc\Web.Graph\bin", "eng", OcrEngineMode.OEM_TESSERACT_ONLY);
-                //api.Init(@"C:\Users\Giansalex\Source\Repos\github\SunatRuc\Ruc", "eng", OcrEngineMode.OEM_TESSERACT_ONLY);
+                //api.Init(@"C:\Users\Administrador\Documents\History\SunatRuc\Web.Graph\bin", "eng", OcrEngineMode.OEM_TESSERACT_ONLY);
+                api.Init(@"C:\Users\Giansalex\Source\Repos\github\SunatRuc\Ruc", "eng", OcrEngineMode.OEM_TESSERACT_ONLY);
 #else
                 api.Init(@"h:\root\home\giancarlos-001\www\pymestudio\bin", "eng", OcrEngineMode.OEM_TESSERACT_ONLY);
 #endif

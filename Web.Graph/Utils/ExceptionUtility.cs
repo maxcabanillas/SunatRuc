@@ -3,6 +3,7 @@ using System.IO;
 
 namespace Web.Graph.Utils
 {
+    /*
     /// <summary>
     /// Class for save exceptions.
     /// </summary>
@@ -51,5 +52,5 @@ namespace Web.Graph.Utils
                 }
             }
         }
-    }
+    }*/
 }

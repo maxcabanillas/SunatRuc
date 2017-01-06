@@ -527,6 +527,11 @@
             <param name="query">consulta GraphQL</param>
             <returns>resultado de la Consulta</returns>
         </member>
+        <member name="T:Web.Graph.Controllers.HomeController">
+            <summary>
+            Home controller.
+            </summary>
+        </member>
         <member name="M:Web.Graph.Controllers.HomeController.Index">
             <summary>
             Index action.
@@ -643,18 +648,6 @@
             <summary>
             New Instance of <see cref="T:Web.Graph.Models.CompanyType"/>
             </summary>
-        </member>
-        <member name="T:Web.Graph.Utils.ExceptionUtility">
-            <summary>
-            Class for save exceptions.
-            </summary>
-        </member>
-        <member name="M:Web.Graph.Utils.ExceptionUtility.LogException(System.Exception,System.String)">
-            <summary>
-            Añade el detalle de una Excepcion.
-            </summary>
-            <param name="exc"></param>
-            <param name="source"></param>
         </member>
     </members>
 </doc>
