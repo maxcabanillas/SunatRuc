@@ -25,7 +25,7 @@
                 @Html.AntiForgeryToken()
                 <h4>Use una cuenta existente para iniciar sesión.</h4>
                 <hr />
-                if (ViewContext.ViewData.ModelState.Count > 0)
+                if (ViewContext.ViewData.ModelState.Any(x => x.Key == ""))
                 {
                     @Html.ValidationSummary("", new { @class = "text-danger bs-callout" })
                 }
