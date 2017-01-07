@@ -45,6 +45,7 @@ body
     background-color: #F5F5F5 !important;
 }
 
+
 .bg-clouds
 {
     background-color: #ECF0F1 !important;
@@ -1996,4 +1997,11 @@ fieldset[disabled] .form-control
 
 .header-nav-bar {
     margin-bottom: 9rem;
+}
+
+.normal-title {
+    font-size: 20px;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: #95a5a6;
 }

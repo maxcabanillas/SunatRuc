@@ -12,7 +12,7 @@ namespace Web.Graph.Controllers
         /// Index action.
         /// </summary>
         /// <returns></returns>
-        [OutputCache(Duration = 3600, VaryByParam = "none", Location = OutputCacheLocation.Client)]
+        //[OutputCache(Duration = 3600, VaryByParam = "none", Location = OutputCacheLocation.Client)]
         public ActionResult Index()
         {
             ViewBag.Title = "Pagina Principal";
