@@ -177,6 +177,37 @@ query {
             config.SetSampleResponse(resp, new MediaTypeHeaderValue("text/json"), "Dni", "POST");
             config.SetSampleResponse(resp, new MediaTypeHeaderValue("application/json"), "Dni", "POST");
             #endregion
+
+            #region Nombre
+            resp = new TextSample(
+@"
+{
+   ""status"":""success"",
+   ""value"":[
+      {
+         ""dv"":6,
+         ""dni"":""22294023"",
+         ""name"":""SANDRA GLADYS TORRES PEREZ""
+      },
+      {
+         ""dv"":1,
+         ""dni"":""21880503"",
+         ""name"":""GLADYS LILIANA TORRES PEREZ""
+      }
+   ]
+}");
+            config.SetSampleResponse(resp, new MediaTypeHeaderValue("application/json"), "Nombre", "GET", "name");
+            config.SetSampleResponse(resp, new MediaTypeHeaderValue("application/json"), "Nombre", "POST", "name");
+            resp = new TextSample(
+@"
+{
+   ""status"":""not_found"",
+   ""status_text"":""No se encontraron coincidencias""
+}");
+            config.SetSampleResponse(resp, new MediaTypeHeaderValue("text/json"), "Nombre", "GET", "name");
+            config.SetSampleResponse(resp, new MediaTypeHeaderValue("text/json"), "Nombre", "POST", "name");
+
+            #endregion
             //config.SetSampleResponse(new ImageSample("http://pngimg.com/upload/banana_PNG842.png"), new MediaTypeHeaderValue("application/json"), "Ruc", "POST");
 
             //// Uncomment the following to use the image on "../images/aspNetHome.png" directly as the response sample for media type "image/png"

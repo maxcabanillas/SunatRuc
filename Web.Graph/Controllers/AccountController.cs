@@ -375,6 +375,7 @@ namespace Web.Graph.Controllers
                         return RedirectToLocal(returnUrl);
                     }
                 }
+                ViewBag.LoginProvider = info.Login.LoginProvider;
                 AddErrors(result);
             }
 

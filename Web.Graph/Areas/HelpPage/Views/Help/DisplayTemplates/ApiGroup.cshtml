@@ -11,7 +11,7 @@
         null;
 }
 
-<h2 id="@Model.Key.ControllerName">@Model.Key.ControllerName</h2>
+<h2 id="@Model.Key.ControllerName"><i class="fa fa-caret-right"></i>&nbsp;@Model.Key.ControllerName</h2>
 @if (!String.IsNullOrEmpty(controllerDocumentation))
 {
     <p>@controllerDocumentation</p>
@@ -24,7 +24,7 @@
     @foreach (var api in Model)
     {
         <tr>
-            <td class="api-name"><i class="fa fa-tag"></i> <a href="@Url.Action("Api", "Help", new { apiId = api.GetFriendlyId() })">@api.HttpMethod.Method @api.RelativePath</a></td>
+            <td class="api-name"><i class="fa fa-tag" style="color: #4bd64b;"></i> <a href="@Url.Action("Api", "Help", new { apiId = api.GetFriendlyId() })">@api.HttpMethod.Method @api.RelativePath</a></td>
             <td class="api-documentation">
             @if (api.Documentation != null)
             {

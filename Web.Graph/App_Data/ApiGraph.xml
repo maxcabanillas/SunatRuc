@@ -556,6 +556,25 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="T:Web.Graph.Controllers.NombreController">
+            <summary>
+            Consulta de DNI por nombre.
+            </summary>
+        </member>
+        <member name="M:Web.Graph.Controllers.NombreController.Get(System.String)">
+            <summary>
+            Obtiene los DNI relacionados al nombre de la persona.
+            </summary>
+            <param name="name">Nombre de la Persona</param>
+            <returns>Lista de Resultados</returns>
+        </member>
+        <member name="M:Web.Graph.Controllers.NombreController.Post(System.String)">
+            <summary>
+            Obtiene los DNI relacionados al nombre de la persona.
+            </summary>
+            <param name="name">Nombre de la Persona</param>
+            <returns>Lista de Resultados</returns>
+        </member>
         <member name="T:Web.Graph.Controllers.RucController">
             <summary>
             Consulta Ruc - SUNAT
@@ -654,6 +673,21 @@
             <summary>
             New Instance of <see cref="T:Web.Graph.Models.CompanyType"/>
             </summary>
+        </member>
+        <member name="T:Web.Graph.Utils.HtmlExtensions">
+            <summary>
+            Html Custom Extensions.
+            </summary>
+        </member>
+        <member name="M:Web.Graph.Utils.HtmlExtensions.DisplayNameRawFor``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}})">
+            <summary>
+            Get Name for Model
+            </summary>
+            <param name="htmlHelper"></param>
+            <param name="expression"></param>
+            <typeparam name="TModel"></typeparam>
+            <typeparam name="TProperty"></typeparam>
+            <returns></returns>
         </member>
     </members>
 </doc>

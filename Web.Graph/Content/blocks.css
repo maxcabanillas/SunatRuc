@@ -338,20 +338,13 @@ Version: 1.0
 
 #header-2 .main-nav .nav .dropdown-menu
 {
-    -moz-background-clip: padding;
-    -webkit-background-clip: padding-box;
-    background-clip: padding-box;
-    margin: 0;
-    border: none;
-    text-transform: none;
-    min-width: 180px;
     background: #3E606F;
 }
 
 #header-2 .main-nav .nav .dropdown-menu a
 {
     padding: 8px 20px;
-    color: #666;
+    color: #EEE;
     -webkit-opacity: 1;
     -moz-opacity: 1;
     opacity: 1;

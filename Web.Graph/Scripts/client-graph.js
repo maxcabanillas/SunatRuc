@@ -1,7 +1,15 @@
+var setStateButton = function (state) {
+    $('#btnExecute').prop('disabled', state);
+    var ico = $('#icoEx');
+    if (state === true)
+        ico.removeClass("fa-play").addClass("fa-cog fa-spin");
+    else
+        ico.removeClass("fa-cog fa-spin").addClass("fa-play");
+}
 
 var setOut = function (jObject) {
     window.ace.edit("editorO").setValue(JSON.stringify(jObject, undefined, 2));
-    $('#btnExecute').prop('disabled', false);
+    setStateButton(false);
     console.log($('#Result').is(':visible'));
     $('html, body').animate({
             scrollTop: $("#Result").offset().top - 90
@@ -12,14 +20,14 @@ var setOut = function (jObject) {
 var send = function () {
     var $frm = $(this);
     window.ace.edit("editorO").setValue("Ejecutando...");
-    $('#btnExecute').prop('disabled', true);
+    setStateButton(true);
     $.ajax({
         url : $frm.attr('action'),
         method: $frm.attr('method'),
         data: "=" + window.ace.edit("editorQ").getValue(),
         dataType : 'json',
         error: function () {
-            $('#btnExecute').prop('disabled', false);
+            setStateButton(false);
             alert("Invalid Request");
         }
     }).done(function( msg ) {

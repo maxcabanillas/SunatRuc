@@ -6,6 +6,9 @@ using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Google;
 using Owin;
 using Web.Graph.Models.Auth;
+using Owin.Security.Providers.GitHub;
+using Owin.Security.Providers.Slack;
+
 //using Microsoft.Owin.Security.Google;
 
 namespace Web.Graph
@@ -58,6 +61,20 @@ namespace Web.Graph
             //app.UseTwitterAuthentication(
             //   consumerKey: "",
             //   consumerSecret: "");
+
+            app.UseGitHubAuthentication(
+                clientId: "0c096a9a1ef60bf5e550",
+                clientSecret: "178940fa40bd5561db9225418a8dd472ca32e00d"
+            );
+
+            var options = new SlackAuthenticationOptions
+            {
+                ClientId = "124669683251.124031221440",
+                ClientSecret = "43afe63c4bcbe904a163e5fe66ffafe2",
+                TeamId = "" // optional
+            };
+            options.Scope.Add("identify");
+            app.UseSlackAuthentication(options);
 
             app.UseFacebookAuthentication(
                appId: "1531070826922053",
