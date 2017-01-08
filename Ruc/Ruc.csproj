@@ -20,6 +20,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\Ruc.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -83,6 +84,7 @@
     <Compile Include="DniConsult.cs" />
     <Compile Include="Helper\ImageFilters.cs" />
     <Compile Include="Helper\ZipHelper.cs" />
+    <Compile Include="NombreConsult.cs" />
     <Compile Include="RucConsult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CaptchaResolver.cs" />

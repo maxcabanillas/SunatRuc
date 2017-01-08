@@ -12,6 +12,9 @@ using Patagames.Ocr.Enums;
 
 namespace Ruc
 {
+    /// <summary>
+    /// Class for consult DNI.
+    /// </summary>
     public class DniConsult : CaptchaResolver
     {
         #region Fields
@@ -20,7 +23,11 @@ namespace Ruc
         #endregion
 
         #region Export
-
+        /// <summary>
+        /// Obtien informacion del dni.
+        /// </summary>
+        /// <param name="dni">Dni</param>
+        /// <returns>informacin en array</returns>
         public string[] Get(string dni)
         {
             return GetInternal(dni);

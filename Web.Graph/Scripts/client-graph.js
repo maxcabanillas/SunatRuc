@@ -44,11 +44,11 @@ var staticWordCompleter = {
         var wordList = ["query", "empresa", "ruc", "nombre", "tipo_contribuyente", "profesion", "nombre_comercial", "condicion_contribuyente",
             "estado_contribuyente", "fecha_inscripcion", "fecha_inicio", "departamento", "provincia", "distrito", "direccion",
             "telefono", "fax", "comercio_exterior", "principal","secundario1", "secundario2", "rus", "buen_contribuyente", "retencion",
-            "percepcion_vinterna", "percepcion_cliquido"];
+            "percepcion_vinterna", "percepcion_cliquido", "persona", "primer_nombre", "segundo_nombre", "apellido_paterno", "apellido_materno"];
         callback(null, wordList.map(function (word) {
             return {
                 caption: word,
-                value: word,
+                value: word == "persona" ? "persona (dni:\"\"){\r\n        primer_nombre\r\n    }" : word,
                 meta: "GraphQL"
             };
         }));

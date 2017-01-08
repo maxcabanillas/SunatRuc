@@ -55,6 +55,7 @@
     <Compile Include="TestZip.cs" />
     <Compile Include="TestRuc.cs" />
     <Compile Include="DniTest.cs" />
+    <Compile Include="NameTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
