@@ -42,7 +42,7 @@
                     <h3>GraphiQL</h3>
                 </div>
                 <div class="col-sm-4 pull-right">
-                    <button type="submit" class="btn btn-primary pull-right" data-toggle="tooltip" data-placement="top" title="Ejecutar">
+                    <button type="submit" class="btn btn-primary pull-right" id="btnExecute" data-toggle="tooltip" data-placement="top" title="Ejecutar">
                         <span class="glyphicon glyphicon-play"></span>
                     </button>
                 </div>
@@ -50,11 +50,11 @@
             <div class="form-group">
                 <div id="editorQ">
 query {
-empresa(ruc:"20254138577") {
-	ruc
-	nombre
-    direccion
-  }
+    empresa(ruc:"20254138577") {
+	    ruc
+	    nombre
+        direccion
+    }
 }
 </div>
             </div>

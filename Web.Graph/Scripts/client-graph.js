@@ -1,7 +1,7 @@
 
 var setOut = function (jObject) {
     window.ace.edit("editorO").setValue(JSON.stringify(jObject, undefined, 2));
-
+    $('#btnExecute').prop('disabled', false);
     console.log($('#Result').is(':visible'));
     $('html, body').animate({
             scrollTop: $("#Result").offset().top - 90
@@ -12,12 +12,14 @@ var setOut = function (jObject) {
 var send = function () {
     var $frm = $(this);
     window.ace.edit("editorO").setValue("Ejecutando...");
+    $('#btnExecute').prop('disabled', true);
     $.ajax({
         url : $frm.attr('action'),
         method: $frm.attr('method'),
         data: "=" + window.ace.edit("editorQ").getValue(),
         dataType : 'json',
         error: function () {
+            $('#btnExecute').prop('disabled', false);
             alert("Invalid Request");
         }
     }).done(function( msg ) {

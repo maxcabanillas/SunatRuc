@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using GraphQL.Types;
 using Ruc;
 using Web.Graph.Utils;
@@ -36,7 +37,7 @@ namespace Web.Graph.Models
                     };
                     var names = result[0].Split(' ');
                     persona.PrimerNombre = names[0];
-                    persona.SegundoNombre = names.Length > 1 ? string.Join(" ", names) : string.Empty;
+                    persona.SegundoNombre = names.Length > 1 ? string.Join(" ", names.Skip(1)) : string.Empty;
                     return persona;
                 }
                 catch (Exception e)
