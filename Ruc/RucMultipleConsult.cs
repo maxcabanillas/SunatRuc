@@ -13,15 +13,20 @@ using Ruc.Helper;
 
 namespace Ruc
 {
+    /// <summary>
+    /// Consulta a SUNAT, con multiples RUC.
+    /// </summary>
     public class RucMultipleConsult : CaptchaResolver
     {
-        #region Fields
-        private const string UrlConsult = "http://www.sunat.gob.pe/cl-ti-itmrconsmulruc/jrmS00Alias";
-        private const string UrlImage = "http://www.sunat.gob.pe/cl-ti-itmrconsmulruc/captcha?accion=image";
-        #endregion
 
         #region Export
 
+        /// <summary>
+        /// Get info from rucs.
+        /// </summary>
+        /// <param name="rucs">Multiples rucs</param>
+        /// <returns>Infor de todos los ruc.</returns>
+        /// <exception cref="ArgumentException"></exception>
         public IEnumerable<string[]> GetInfo(params string[] rucs)
         {
             if (rucs.Length == 0)
@@ -32,7 +37,7 @@ namespace Ruc
             //    return GetOpcion2(rucs);
             //}
             var captcha = GetCaptchaString();
-            var url = UrlConsult + "?accion=consManual&" + string.Join("&", rucs.Select(ruc => "selRuc=" + ruc)) + "&codigoM=" + captcha;
+            var url = Properties.Resources.RucMCons + "?accion=consManual&" + string.Join("&", rucs.Select(ruc => "selRuc=" + ruc)) + "&codigoM=" + captcha;
             var http = CreateRequest(url);
             return GetProcessResponse((HttpWebResponse)http.GetResponse());
         }
@@ -63,7 +68,7 @@ namespace Ruc
                 {"codigoA", captcha}
             };
 
-            HttpWebResponse webResponse = MultipartFormDataPost(UrlConsult, postParameters);
+            HttpWebResponse webResponse = MultipartFormDataPost(Properties.Resources.RucMCons, postParameters);
 
             return GetProcessResponse(webResponse);
         }
@@ -115,7 +120,6 @@ namespace Ruc
                     {
                         contents.Enqueue(line.Split('|'));
                     }
-                    r.Dispose();
                 }
                 return contents;
             }
@@ -125,7 +129,7 @@ namespace Ruc
         {
             for (byte i = 0; i < 4; i++)
             {
-                var captcha = GetCaptcha(UrlImage);
+                var captcha = GetCaptcha(Properties.Resources.RucMImage);
                 if (captcha != null && captcha.Length == 4)
                     return captcha;
             }
@@ -134,6 +138,7 @@ namespace Ruc
         #endregion
 
         #region CatpcharResolver
+        /// <inheritdoc />
         public override string GetCatpcha(Bitmap imagen)
         {
             ImageFilters.ImageToBlackAndWhite(imagen);

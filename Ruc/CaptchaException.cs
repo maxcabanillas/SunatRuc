@@ -8,6 +8,7 @@ namespace Ruc
     /// <summary>
     /// Class for Exception in Captcha.
     /// </summary>
+    [Serializable]
     public class CaptchaException : Exception
     {
         /// <summary>

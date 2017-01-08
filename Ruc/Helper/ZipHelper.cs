@@ -6,6 +6,9 @@ using Ionic.Zip;
 
 namespace Ruc.Helper
 {
+    /// <summary>
+    /// Helper from Zip files.
+    /// </summary>
     public static class ZipHelper
     {
         /// <summary>

@@ -11,21 +11,26 @@ using Ruc.Helper;
 
 namespace Ruc
 {
+    /// <summary>
+    /// Class for consult Ruc - SUNAT.
+    /// </summary>
     public class RucConsult : CaptchaResolver
     {
-        #region Fields
-        private const string UrlConsult = "http://e-consultaruc.sunat.gob.pe/cl-ti-itmrconsruc/jcrS00Alias";
-        private const string UrlImage = "http://e-consultaruc.sunat.gob.pe/cl-ti-itmrconsruc/captcha?accion=image";
-        #endregion
 
         #region Export
 
+        /// <summary>
+        /// Obtiene informacion del ruc.
+        /// </summary>
+        /// <param name="ruc">ruc - 11 digitos.</param>
+        /// <returns>Informacion del ruc</returns>
+        /// <exception cref="ArgumentException"></exception>
         public Dictionary<string, string> GetInfo(string ruc)
         {
             if(ruc.Length != 11)
                 throw new ArgumentException("El ruc debe contener 11 digitos", nameof(ruc));
-            var catpcha = GetCaptcha(UrlImage);
-            var url = UrlConsult + $"?accion=consPorRuc&nroRuc={ruc}&codigo={catpcha}&tipdoc=";
+            var catpcha = GetCaptcha(Properties.Resources.RucImage);
+            var url = Properties.Resources.RucCons + $"?accion=consPorRuc&nroRuc={ruc}&codigo={catpcha}&tipdoc=";
             var http = CreateRequest(url);
             var r = (HttpWebResponse)http.GetResponse();
             if (r.StatusCode != HttpStatusCode.OK)
@@ -159,6 +164,8 @@ namespace Ruc
         #endregion
 
         #region CatpcharResolver
+
+        /// <inheritdoc />
         public override string GetCatpcha(Bitmap imagen)
         {
             ImageFilters.ImageToBlackAndWhite(imagen);

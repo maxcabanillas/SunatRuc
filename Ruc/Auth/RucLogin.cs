@@ -10,12 +10,6 @@ namespace Ruc.Auth
     /// </summary>
     public static class RucLogin
     {
-        #region Fields
-        /// <summary>
-        /// Url para Autentificarse en SUNAT.
-        /// </summary>
-        private const string UrlAuth = "https://e-menu.sunat.gob.pe/cl-ti-itmenu/AutenticaMenuInternet.htm";
-        #endregion
 
         #region Export
         /// <summary>
@@ -47,7 +41,7 @@ namespace Ruc.Auth
         {
             var content = $"username={ruc}{user}&password={pass}&captcha=&params=" + Uri.EscapeDataString("*&*&/cl-ti-itmenu/MenuInternet.htm&b64d26a8b5af091923b23b6407a1c1db41e733a6") + "&exe=";
             var bytes = Encoding.ASCII.GetBytes(content);
-            var req = (HttpWebRequest)WebRequest.Create(UrlAuth);
+            var req = (HttpWebRequest)WebRequest.Create(Properties.Resources.Auth);
             req.AllowAutoRedirect = false;
             req.CookieContainer = new CookieContainer();
             req.Method = "POST";
@@ -56,7 +50,6 @@ namespace Ruc.Auth
             using (var writer = req.GetRequestStream())
             {
                 writer.Write(bytes, 0, bytes.Length);
-                writer.Dispose(); 
             }
             var resp = (HttpWebResponse)req.GetResponse();
             if (resp.StatusCode == HttpStatusCode.NotFound)

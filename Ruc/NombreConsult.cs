@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Text;
 
@@ -13,7 +11,6 @@ namespace Ruc
     public class NombreConsult
     {
         #region Fields
-        private const string UrlConsult = "http://peru.rutificador.com/get_generic_ajax/";
         private const string Csrftoken = "Ivild5Epk";
         #endregion
 
@@ -38,7 +35,7 @@ namespace Ruc
 
         private string GetJson(string value)
         {
-            var http = (HttpWebRequest)WebRequest.Create(UrlConsult);
+            var http = (HttpWebRequest)WebRequest.Create(Properties.Resources.NombreCons);
             http.CookieContainer = new CookieContainer(1);
             http.CookieContainer.Add(new Cookie("csrftoken", Csrftoken, "/", "peru.rutificador.com"));
             http.Method = "POST";

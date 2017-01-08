@@ -17,11 +17,6 @@ namespace Ruc
     /// </summary>
     public class DniConsult : CaptchaResolver
     {
-        #region Fields
-        private const string UrlConsult = "https://cel.reniec.gob.pe/valreg/valreg.do";
-        private const string UrlImage = "https://cel.reniec.gob.pe/valreg/codigo.do";
-        #endregion
-
         #region Export
         /// <summary>
         /// Obtien informacion del dni.
@@ -40,7 +35,7 @@ namespace Ruc
         private string[] GetInternal(string dni)
         {
             var captcha = GetCaptchaString();
-            var url = UrlConsult + $"?accion=buscar&nuDni={dni}&imagen={captcha}";
+            var url = Properties.Resources.DniCons + $"?accion=buscar&nuDni={dni}&imagen={captcha}";
             var http = CreateRequest(url);
             var html = GetContent((HttpWebResponse)http.GetResponse());
             var doc = new HtmlDocument();
@@ -92,7 +87,7 @@ namespace Ruc
         {
             for (byte i = 0; i < 4; i++)
             {
-                var captcha = GetCaptcha(UrlImage);
+                var captcha = GetCaptcha(Properties.Resources.DniImage);
                 if (captcha != null && captcha.Length == 4)
                     return captcha;
             }
@@ -101,6 +96,7 @@ namespace Ruc
         #endregion
 
         #region CapchaResolver
+        /// <inheritdoc />
         public override string GetCatpcha(Bitmap imagen)
         {
             ToOptimize(ref imagen);
