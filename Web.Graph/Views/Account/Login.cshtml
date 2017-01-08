@@ -7,7 +7,7 @@
 @section styles
 {
     <style>
-.bs-callout{padding:20px;margin:20px 0;border:1px solid #eee;border-left-width:5px;border-radius:3px;border-left-color:#ce4844}.auth-ico{font-size:40px;color:gray}
+.bs-callout{padding:20px;margin:20px 0;border:1px solid #eee;border-left-width:5px;border-radius:3px;border-left-color:#ce4844}.auth-ico{font-size:35px;color:gray} #socialLoginList{margin-right: 20px;}
     </style>
     <link rel="stylesheet" href="~/Content/bootstrap-social.css"/>
 }
@@ -28,7 +28,6 @@
                     <div class="col-xs-1">
                         <i class="fa fa-user auth-ico"></i>
                     </div>
-                    @*@Html.LabelFor(m => m.Email, new {@class = "col-md-2 control-label"})*@
                     <div class="col-xs-11">
                         @Html.TextBoxFor(m => m.Email, new {@class = "form-control", placeholder = Html.DisplayNameRawFor(r => r.Email) })
                         @Html.ValidationMessageFor(m => m.Email, "", new {@class = "text-danger"})
@@ -38,7 +37,6 @@
                     <div class="col-xs-1">
                         <i class="fa fa-lock auth-ico"></i>
                     </div>
-                    @*@Html.LabelFor(m => m.Password, new {@class = "col-md-2 control-label"})*@
                     <div class="col-xs-11">
                         @Html.PasswordFor(m => m.Password, new {@class = "form-control", placeholder = Html.DisplayNameRawFor(r => r.Password) })
                         @Html.ValidationMessageFor(m => m.Password, "", new {@class = "text-danger"})
