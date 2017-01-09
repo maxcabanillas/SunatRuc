@@ -514,6 +514,51 @@
             </summary>
             <param name="documentPath">The physical path to XML document.</param>
         </member>
+        <member name="T:Web.Graph.Controllers.AccountController">
+            <summary>
+            Account Controller.
+            </summary>
+        </member>
+        <member name="M:Web.Graph.Controllers.AccountController.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Web.Graph.Controllers.AccountController.#ctor(Web.Graph.ApplicationUserManager,Web.Graph.ApplicationSignInManager)">
+            <summary>
+            
+            </summary>
+            <param name="userManager"></param>
+            <param name="signInManager"></param>
+        </member>
+        <member name="P:Web.Graph.Controllers.AccountController.SignInManager">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Web.Graph.Controllers.AccountController.UserManager">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Web.Graph.Controllers.AccountController.Login(Web.Graph.Models.Auth.LoginViewModel,System.String,System.Boolean)">
+            <summary>
+            User Login.
+            </summary>
+            <param name="model"></param>
+            <param name="returnUrl"></param>
+            <param name="captchaValid"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Graph.Controllers.AccountController.LogOff">
+            <summary>
+            logout action.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Graph.Controllers.AccountController.Dispose(System.Boolean)">
+            <inheritdoc />
+        </member>
         <member name="T:Web.Graph.Controllers.DniController">
             <summary>
             Consulta DNI - Reniec

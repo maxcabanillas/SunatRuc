@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Web.Configuration;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
@@ -53,37 +54,38 @@ namespace Web.Graph
             // Es similar a la opción Recordarme al iniciar sesión.
             app.UseTwoFactorRememberBrowserCookie(DefaultAuthenticationTypes.TwoFactorRememberBrowserCookie);
 
+            var config = WebConfigurationManager.AppSettings;
             // Quitar los comentarios de las siguientes líneas para habilitar el inicio de sesión con proveedores de inicio de sesión de terceros
             app.UseMicrosoftAccountAuthentication(
-                clientId: "810bf223-e8b9-4d76-80b4-0158546f9f6e",
-                clientSecret: "FpQ8SHn0dCjYAnh9YiMfXBh");
+                clientId: config["McId"],
+                clientSecret: config["McKey"]);
 
             //app.UseTwitterAuthentication(
             //   consumerKey: "",
             //   consumerSecret: "");
 
             app.UseGitHubAuthentication(
-                clientId: "0c096a9a1ef60bf5e550",
-                clientSecret: "178940fa40bd5561db9225418a8dd472ca32e00d"
+                clientId: config["GhId"],
+                clientSecret: config["GhKey"]
             );
 
             var options = new SlackAuthenticationOptions
             {
-                ClientId = "124669683251.124031221440",
-                ClientSecret = "43afe63c4bcbe904a163e5fe66ffafe2",
+                ClientId = config["SlId"],
+                ClientSecret = config["SlKey"],
                 TeamId = "" // optional
             };
             options.Scope.Add("identify");
             app.UseSlackAuthentication(options);
 
             app.UseFacebookAuthentication(
-               appId: "1531070826922053",
-               appSecret: "8f8c185ab6bd649c4a7b27fc1d2c2fe2");
+               appId: config["FbId"],
+               appSecret: config["FbKey"]);
 
             app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions
             {
-                ClientId = "800840438376-j64c3l8uqb0fdf1m69l5l8pj698s1u9h.apps.googleusercontent.com",
-                ClientSecret = "F-yMc8f7vfN1DRy7hu4fSMEl"
+                ClientId = config["GgId"],
+                ClientSecret = config["GgKey"]
             });
         }
     }

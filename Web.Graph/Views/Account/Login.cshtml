@@ -1,4 +1,5 @@
-﻿@using Web.Graph.Models.Auth
+﻿@using reCAPTCHA.MVC
+@using Web.Graph.Models.Auth
 @using Web.Graph.Utils
 @model LoginViewModel
 @{
@@ -52,11 +53,17 @@
                 </div>
                 <div class="form-group">
                     <div class="col-md-offset-1 col-md-11">
+                        @Html.Recaptcha()
+                        @Html.ValidationMessage("ReCaptcha", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-1 col-md-11">
                         <input type="submit" value="Iniciar sesión" class="btn btn-default" />
                     </div>
                 </div>
                 <p>
-                    <span class="fa fa-user" style="color: gray"></span> @Html.ActionLink("Registrar como nuevo usuario", "Register")
+                    <span class="fa fa-user-plus" style="color: green"></span> @Html.ActionLink("Registrar como nuevo usuario", "Register")
                 </p>
                 @* Habilite esta opción después de habilitar la confirmación de la cuenta para la función de restablecimiento de contraseña
                     <p>
