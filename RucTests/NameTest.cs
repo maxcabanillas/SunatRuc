@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using Newtonsoft.Json.Linq;
+using NUnit.Framework;
 using Ruc;
 
 namespace RucTests
@@ -10,17 +11,27 @@ namespace RucTests
         public void GetTest()
         {
             var cs = new NombreConsult();
-            var json = cs.Get("Gladys Torres Magallanes");
+            var json = cs.Get("ENRIQUE SAMUEL CUCHO");
             Assert.IsNotEmpty(json);
-            StringAssert.Contains("success", json);
+            TestContext.WriteLine(json);
+
+            var obj = JObject.Parse(json);
+            StringAssert.Contains("success", (string)obj["status"]);
+            var value = (JArray)obj["value"];
+            foreach (var val in value)
+            {
+                TestContext.WriteLine("DNI : {0}, NAME: {1}", (string)val["dni"], (string)val["name"]);
+            }
         }
         [Test]
-        public void GetFailTest()
+        public void GetNotFoundTest()
         {
             var cs = new NombreConsult();
             var json = cs.Get("Gladys Katherine Torres Magallanes");
-            Assert.IsNotEmpty(json); 
-            StringAssert.Contains("not_found", json);
+            Assert.IsNotEmpty(json);
+            var obj = JObject.Parse(json);
+            StringAssert.Contains("not_found", (string)obj["status"]);
+            StringAssert.Contains("No se encontraron coincidencias", (string)obj["status_text"]);
         }
     }
 }
